@@ -1,4 +1,4 @@
-﻿package com.themetalstorm.bibliothekssystem.repository;
+package com.themetalstorm.bibliothekssystem.repository;
 
 import com.themetalstorm.bibliothekssystem.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
