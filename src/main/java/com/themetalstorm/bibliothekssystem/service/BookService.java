@@ -2,14 +2,13 @@ package com.themetalstorm.bibliothekssystem.service;
 
 import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
-import dto.BookDTO;
+import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {

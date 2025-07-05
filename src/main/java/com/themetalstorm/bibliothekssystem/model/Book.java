@@ -1,6 +1,6 @@
 package com.themetalstorm.bibliothekssystem.model;
 
-import dto.BookDTO;
+import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

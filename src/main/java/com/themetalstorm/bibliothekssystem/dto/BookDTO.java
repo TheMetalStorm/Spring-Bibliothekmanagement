@@ -1,4 +1,4 @@
-package dto;
+package com.themetalstorm.bibliothekssystem.dto;
 
 import com.themetalstorm.bibliothekssystem.model.Book;
 
