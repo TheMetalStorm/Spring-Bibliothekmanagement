@@ -1,9 +1,7 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
-import com.themetalstorm.bibliothekssystem.model.Book;
-import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.service.BookService;
-import dto.BookDTO;
+import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
