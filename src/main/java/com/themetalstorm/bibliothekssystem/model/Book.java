@@ -1,5 +1,6 @@
-﻿package com.themetalstorm.bibliothekssystem.model;
+package com.themetalstorm.bibliothekssystem.model;
 
+import dto.BookDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,7 +15,7 @@ public class Book {
     private int id;
 
     @Column(nullable = false)
-    private int name;
+    private String name;
 
     @Column(nullable = false)
     private String isbn;
@@ -33,7 +34,7 @@ public class Book {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Book(int id, int name, String isbn, String author, String publisher, String genre, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Book(int id, String name, String isbn, String author, String publisher, String genre, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.isbn = isbn;
@@ -44,6 +45,20 @@ public class Book {
         this.updatedAt = updatedAt;
     }
 
+    public Book(String name, String isbn, String author, String publisher, String genre) {
+        this.name = name;
+        this.isbn = isbn;
+        this.author = author;
+        this.publisher = publisher;
+        this.genre = genre;
+    }
+    public Book(BookDTO bookDTO) {
+        this.name = bookDTO.name();
+        this.isbn = bookDTO.isbn();
+        this.author = bookDTO.author();
+        this.publisher = bookDTO.publisher();
+        this.genre = bookDTO.genre();
+    }
     public Book() {
 
     }
@@ -73,11 +88,11 @@ public class Book {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
