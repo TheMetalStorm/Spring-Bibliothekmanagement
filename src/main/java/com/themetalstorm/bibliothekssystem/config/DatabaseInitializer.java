@@ -1,10 +1,12 @@
 package com.themetalstorm.bibliothekssystem.config;
 
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
-import com.themetalstorm.bibliothekssystem.model.Author;
-import com.themetalstorm.bibliothekssystem.model.Book;
+import com.themetalstorm.bibliothekssystem.dto.BookDTO;
+import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
+
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.service.AuthorService;
+import com.themetalstorm.bibliothekssystem.service.BookService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,19 +19,16 @@ import java.util.*;
 public class DatabaseInitializer {
     @Bean
     @Transactional
-    CommandLineRunner initDatabase( AuthorService authorService, BookRepository bookRepository) {
+    CommandLineRunner initDatabase(AuthorService authorService, BookRepository bookRepository, BookService bookService) {
         return args -> {
             bookRepository.deleteAll();
             authorService.deleteAll();
-            
-            bookRepository.saveAll(getSampleBooks());
 
+            getSampleBooks().forEach(bookService::addBook);
         };
     }
 
-
-
-    private List<Book> getSampleBooks() {
+    private List<BookDTO> getSampleBooks() {
         // First create all authors
         AuthorDTO harperLee = new AuthorDTO("Harper", "Lee", LocalDate.of(1926, 4, 28),
                 "Pulitzer Prize-winning author of To Kill a Mockingbird", null);
@@ -166,66 +165,187 @@ public class DatabaseInitializer {
         AuthorDTO rfKuang = new AuthorDTO("R.F.", "Kuang", LocalDate.of(1996, 5, 29),
                 "Author of Babel", null);
 
-        // Then create books with author sets
+        // Create genre DTOs
+        GenreDTO classicGenre = new GenreDTO("Classic", "Works of enduring artistic quality and timeless appeal");
+        GenreDTO dystopianGenre = new GenreDTO("Dystopian", "Fictional societies that are undesirable or frightening");
+        GenreDTO fantasyGenre = new GenreDTO("Fantasy", "Imaginary worlds and magical elements");
+        GenreDTO romanceGenre = new GenreDTO("Romance", "Stories focusing on love and relationships");
+        GenreDTO biographyGenre = new GenreDTO("Biography", "Non-fictional accounts of people's lives");
+        GenreDTO politicalSatireGenre = new GenreDTO("Political Satire", "Uses humor to critique politics");
+        GenreDTO historicalGenre = new GenreDTO("Historical", "Set in the past with historical context");
+        GenreDTO historicalFictionGenre = new GenreDTO("Historical Fiction", "Fictional stories set in historical periods");
+        GenreDTO youngAdultGenre = new GenreDTO("Young Adult", "Books aimed at teenage readers");
+        GenreDTO thrillerGenre = new GenreDTO("Thriller", "Fast-paced, suspenseful stories");
+        GenreDTO mysteryGenre = new GenreDTO("Mystery", "Stories involving puzzles or crimes to solve");
+        GenreDTO horrorGenre = new GenreDTO("Horror", "Intended to scare or unsettle readers");
+        GenreDTO postApocalypticGenre = new GenreDTO("Post-Apocalyptic", "Set after a catastrophic event");
+        GenreDTO scienceFictionGenre = new GenreDTO("Science Fiction", "Futuristic technology and scientific concepts");
+        GenreDTO memoirGenre = new GenreDTO("Memoir", "Personal accounts of specific life experiences");
+        GenreDTO anthropologyGenre = new GenreDTO("Anthropology", "Study of human societies and cultures");
+        GenreDTO psychologicalThrillerGenre = new GenreDTO("Psychological Thriller", "Focuses on unstable emotional states");
+        GenreDTO selfHelpGenre = new GenreDTO("Self-Help", "Books intended to help readers improve themselves");
+        GenreDTO mythologyGenre = new GenreDTO("Mythology", "Based on or relating to myths");
+        GenreDTO literaryFictionGenre = new GenreDTO("Literary Fiction", "Character-driven stories with artistic merit");
+        GenreDTO historicalRomanceGenre = new GenreDTO("Historical Romance", "Romance novels set in historical periods");
+
+        // Then create books with author sets and genres
         return List.of(
-                createBook("To Kill a Mockingbird", "978-0061120084", "HarperCollins", "Classic", harperLee, georgeOrwell),
-                createBook("1984", "978-0451524935", "Signet Classics", "Dystopian", georgeOrwell),
-                createBook("The Great Gatsby", "978-0743273565", "Scribner", "Classic", fScottFitzgerald),
-                createBook("The Hobbit", "978-0547928227", "Houghton Mifflin", "Fantasy", jrrTolkien),
-                createBook("Pride and Prejudice", "978-0486280615", "Dover Publications", "Romance", janeAusten),
-                createBook("The Diary of a Young Girl", "978-0553577129", "Bantam", "Biography", anneFrank),
-                createBook("Animal Farm", "978-0451526342", "Signet Classics", "Political Satire", georgeOrwell),
-                createBook("The Alchemist", "978-0062315007", "HarperOne", "Fantasy", pauloCoelho),
-                createBook("Brave New World", "978-0060850524", "Harper Perennial", "Dystopian", aldousHuxley),
-                createBook("The Grapes of Wrath", "978-0143039433", "Penguin Classics", "Historical", johnSteinbeck),
-                createBook("The Book Thief", "978-0375842207", "Knopf", "Historical", markusZusak),
-                createBook("The Kite Runner", "978-1594631931", "Riverhead Books", "Historical Fiction", khaledHosseini),
-                createBook("The Hunger Games", "978-0439023481", "Scholastic Press", "Dystopian", suzanneCollins),
-                createBook("The Fault in Our Stars", "978-0525478812", "Dutton Books", "Young Adult", johnGreen),
-                createBook("Gone Girl", "978-0307588371", "Crown Publishing", "Thriller", gillianFlynn),
-                createBook("The Girl on the Train", "978-1594634024", "Riverhead Books", "Mystery", paulaHawkins),
-                createBook("The Da Vinci Code", "978-0307474278", "Anchor", "Thriller", danBrown),
-                createBook("The Shining", "978-0307743657", "Anchor", "Horror", stephenKing),
-                createBook("The Road", "978-0307387899", "Vintage", "Post-Apocalyptic", cormacMcCarthy),
-                createBook("A Game of Thrones", "978-0553103540", "Bantam", "Fantasy", georgeMartin),
-                createBook("The Handmaid's Tale", "978-0385490818", "Anchor", "Dystopian", margaretAtwood),
-                createBook("The Martian", "978-0553418026", "Broadway Books", "Science Fiction", andyWeir),
-                createBook("Educated", "978-0399590504", "Random House", "Memoir", taraWestover),
-                createBook("Sapiens", "978-0062316097", "Harper", "Anthropology", yuvalHarari),
-                createBook("The Silent Patient", "978-1250301697", "Celadon Books", "Psychological Thriller", alexMichaelides),
-                createBook("Where the Crawdads Sing", "978-0735219090", "G.P. Putnam's Sons", "Mystery", deliaOwens),
-                createBook("Atomic Habits", "978-0735211292", "Avery", "Self-Help", jamesClear),
-                createBook("Becoming", "978-1524763138", "Crown", "Memoir", michelleObama),
-                createBook("The Midnight Library", "978-0525559474", "Viking", "Fantasy", mattHaig),
-                createBook("Circe", "978-0316556347", "Little, Brown", "Mythology", madelineMiller),
-                createBook("Normal People", "978-1984822185", "Hogarth", "Literary Fiction", sallyRooney),
-                createBook("The Seven Husbands of Evelyn Hugo", "978-1501161933", "Washington Square Press", "Historical Fiction", taylorReid),
-                createBook("Project Hail Mary", "978-0593135204", "Ballantine Books", "Science Fiction", andyWeir),
-                createBook("Dune", "978-0441172719", "Ace", "Science Fiction", frankHerbert),
-                createBook("The Vanishing Half", "978-0525536291", "Riverhead Books", "Literary Fiction", britBennett),
-                createBook("Malibu Rising", "978-1524798659", "Ballantine Books", "Historical Fiction", taylorReid),
-                createBook("Klara and the Sun", "978-0593318171", "Knopf", "Science Fiction", kazuoIshiguro),
-                createBook("The Invisible Life of Addie LaRue", "978-0765387561", "Tor Books", "Fantasy", veSchwab),
-                createBook("Crying in H Mart", "978-1984820365", "Knopf", "Memoir", michelleZauner),
-                createBook("The House in the Cerulean Sea", "978-1250217288", "Tor Books", "Fantasy", tjKlune),
-                createBook("Pachinko", "978-1455563937", "Grand Central Publishing", "Historical Fiction", minJinLee),
-                createBook("The Song of Achilles", "978-0062060624", "Ecco", "Mythology", madelineMiller),
-                createBook("All the Light We Cannot See", "978-1501173219", "Scribner", "Historical Fiction", anthonyDoerr),
-                createBook("Little Fires Everywhere", "978-0735224292", "Penguin Press", "Literary Fiction", celesteNg),
-                createBook("The Goldfinch", "978-0316055437", "Little, Brown", "Literary Fiction", donnaTartt),
-                createBook("The Thursday Murder Club", "978-1984880983", "Penguin Books", "Mystery", richardOsman),
-                createBook("Cloud Cuckoo Land", "978-1982168438", "Scribner", "Historical Fiction", anthonyDoerr),
-                createBook("The Midnight Rose", "978-1471133433", "Atria Books", "Historical Romance", lucindaRiley),
-                createBook("The Lincoln Highway", "978-0735222359", "Viking", "Literary Fiction", amorTowles),
-                createBook("Babel", "978-0063021426", "Harper Voyager", "Fantasy", rfKuang)
+                createBook("To Kill a Mockingbird", "978-0061120084", "HarperCollins",
+                        new HashSet<>(Set.of(classicGenre)),
+                        new HashSet<>(Set.of(harperLee, georgeOrwell))),
+                createBook("1984", "978-0451524935", "Signet Classics",
+                        new HashSet<>(Set.of(dystopianGenre)),
+                        new HashSet<>(Set.of(georgeOrwell))),
+                createBook("The Great Gatsby", "978-0743273565", "Scribner",
+                        new HashSet<>(Set.of(classicGenre)),
+                        new HashSet<>(Set.of(fScottFitzgerald))),
+                createBook("The Hobbit", "978-0547928227", "Houghton Mifflin",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(jrrTolkien))),
+                createBook("Pride and Prejudice", "978-0486280615", "Dover Publications",
+                        new HashSet<>(Set.of(romanceGenre)),
+                        new HashSet<>(Set.of(janeAusten))),
+                createBook("The Diary of a Young Girl", "978-0553577129", "Bantam",
+                        new HashSet<>(Set.of(biographyGenre)),
+                        new HashSet<>(Set.of(anneFrank))),
+                createBook("Animal Farm", "978-0451526342", "Signet Classics",
+                        new HashSet<>(Set.of(politicalSatireGenre)),
+                        new HashSet<>(Set.of(georgeOrwell))),
+                createBook("The Alchemist", "978-0062315007", "HarperOne",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(pauloCoelho))),
+                createBook("Brave New World", "978-0060850524", "Harper Perennial",
+                        new HashSet<>(Set.of(dystopianGenre)),
+                        new HashSet<>(Set.of(aldousHuxley))),
+                createBook("The Grapes of Wrath", "978-0143039433", "Penguin Classics",
+                        new HashSet<>(Set.of(historicalGenre)),
+                        new HashSet<>(Set.of(johnSteinbeck))),
+                createBook("The Book Thief", "978-0375842207", "Knopf",
+                        new HashSet<>(Set.of(historicalGenre)),
+                        new HashSet<>(Set.of(markusZusak))),
+                createBook("The Kite Runner", "978-1594631931", "Riverhead Books",
+                        new HashSet<>(Set.of(historicalFictionGenre)),
+                        new HashSet<>(Set.of(khaledHosseini))),
+                createBook("The Hunger Games", "978-0439023481", "Scholastic Press",
+                        new HashSet<>(Set.of(dystopianGenre)),
+                        new HashSet<>(Set.of(suzanneCollins))),
+                createBook("The Fault in Our Stars", "978-0525478812", "Dutton Books",
+                        new HashSet<>(Set.of(youngAdultGenre)),
+                        new HashSet<>(Set.of(johnGreen))),
+                createBook("Gone Girl", "978-0307588371", "Crown Publishing",
+                        new HashSet<>(Set.of(thrillerGenre)),
+                        new HashSet<>(Set.of(gillianFlynn))),
+                createBook("The Girl on the Train", "978-1594634024", "Riverhead Books",
+                        new HashSet<>(Set.of(mysteryGenre)),
+                        new HashSet<>(Set.of(paulaHawkins))),
+                createBook("The Da Vinci Code", "978-0307474278", "Anchor",
+                        new HashSet<>(Set.of(thrillerGenre)),
+                        new HashSet<>(Set.of(danBrown))),
+                createBook("The Shining", "978-0307743657", "Anchor",
+                        new HashSet<>(Set.of(horrorGenre)),
+                        new HashSet<>(Set.of(stephenKing))),
+                createBook("The Road", "978-0307387899", "Vintage",
+                        new HashSet<>(Set.of(postApocalypticGenre)),
+                        new HashSet<>(Set.of(cormacMcCarthy))),
+                createBook("A Game of Thrones", "978-0553103540", "Bantam",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(georgeMartin))),
+                createBook("The Handmaid's Tale", "978-0385490818", "Anchor",
+                        new HashSet<>(Set.of(dystopianGenre)),
+                        new HashSet<>(Set.of(margaretAtwood))),
+                createBook("The Martian", "978-0553418026", "Broadway Books",
+                        new HashSet<>(Set.of(scienceFictionGenre)),
+                        new HashSet<>(Set.of(andyWeir))),
+                createBook("Educated", "978-0399590504", "Random House",
+                        new HashSet<>(Set.of(memoirGenre)),
+                        new HashSet<>(Set.of(taraWestover))),
+                createBook("Sapiens", "978-0062316097", "Harper",
+                        new HashSet<>(Set.of(anthropologyGenre)),
+                        new HashSet<>(Set.of(yuvalHarari))),
+                createBook("The Silent Patient", "978-1250301697", "Celadon Books",
+                        new HashSet<>(Set.of(psychologicalThrillerGenre)),
+                        new HashSet<>(Set.of(alexMichaelides))),
+                createBook("Where the Crawdads Sing", "978-0735219090", "G.P. Putnam's Sons",
+                        new HashSet<>(Set.of(mysteryGenre)),
+                        new HashSet<>(Set.of(deliaOwens))),
+                createBook("Atomic Habits", "978-0735211292", "Avery",
+                        new HashSet<>(Set.of(selfHelpGenre)),
+                        new HashSet<>(Set.of(jamesClear))),
+                createBook("Becoming", "978-1524763138", "Crown",
+                        new HashSet<>(Set.of(memoirGenre)),
+                        new HashSet<>(Set.of(michelleObama))),
+                createBook("The Midnight Library", "978-0525559474", "Viking",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(mattHaig))),
+                createBook("Circe", "978-0316556347", "Little, Brown",
+                        new HashSet<>(Set.of(mythologyGenre)),
+                        new HashSet<>(Set.of(madelineMiller))),
+                createBook("Normal People", "978-1984822185", "Hogarth",
+                        new HashSet<>(Set.of(literaryFictionGenre)),
+                        new HashSet<>(Set.of(sallyRooney))),
+                createBook("The Seven Husbands of Evelyn Hugo", "978-1501161933", "Washington Square Press",
+                        new HashSet<>(Set.of(historicalFictionGenre)),
+                        new HashSet<>(Set.of(taylorReid))),
+                createBook("Project Hail Mary", "978-0593135204", "Ballantine Books",
+                        new HashSet<>(Set.of(scienceFictionGenre)),
+                        new HashSet<>(Set.of(andyWeir))),
+                createBook("Dune", "978-0441172719", "Ace",
+                        new HashSet<>(Set.of(scienceFictionGenre)),
+                        new HashSet<>(Set.of(frankHerbert))),
+                createBook("The Vanishing Half", "978-0525536291", "Riverhead Books",
+                        new HashSet<>(Set.of(literaryFictionGenre)),
+                        new HashSet<>(Set.of(britBennett))),
+                createBook("Malibu Rising", "978-1524798659", "Ballantine Books",
+                        new HashSet<>(Set.of(historicalFictionGenre)),
+                        new HashSet<>(Set.of(taylorReid))),
+                createBook("Klara and the Sun", "978-0593318171", "Knopf",
+                        new HashSet<>(Set.of(scienceFictionGenre)),
+                        new HashSet<>(Set.of(kazuoIshiguro))),
+                createBook("The Invisible Life of Addie LaRue", "978-0765387561", "Tor Books",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(veSchwab))),
+                createBook("Crying in H Mart", "978-1984820365", "Knopf",
+                        new HashSet<>(Set.of(memoirGenre)),
+                        new HashSet<>(Set.of(michelleZauner))),
+                createBook("The House in the Cerulean Sea", "978-1250217288", "Tor Books",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(tjKlune))),
+                createBook("Pachinko", "978-1455563937", "Grand Central Publishing",
+                        new HashSet<>(Set.of(historicalFictionGenre)),
+                        new HashSet<>(Set.of(minJinLee))),
+                createBook("The Song of Achilles", "978-0062060624", "Ecco",
+                        new HashSet<>(Set.of(mythologyGenre)),
+                        new HashSet<>(Set.of(madelineMiller))),
+                createBook("All the Light We Cannot See", "978-1501173219", "Scribner",
+                        new HashSet<>(Set.of(historicalFictionGenre)),
+                        new HashSet<>(Set.of(anthonyDoerr))),
+                createBook("Little Fires Everywhere", "978-0735224292", "Penguin Press",
+                        new HashSet<>(Set.of(literaryFictionGenre)),
+                        new HashSet<>(Set.of(celesteNg))),
+                createBook("The Goldfinch", "978-0316055437", "Little, Brown",
+                        new HashSet<>(Set.of(literaryFictionGenre)),
+                        new HashSet<>(Set.of(donnaTartt))),
+                createBook("The Thursday Murder Club", "978-1984880983", "Penguin Books",
+                        new HashSet<>(Set.of(mysteryGenre)),
+                        new HashSet<>(Set.of(richardOsman))),
+                createBook("Cloud Cuckoo Land", "978-1982168438", "Scribner",
+                        new HashSet<>(Set.of(historicalFictionGenre)),
+                        new HashSet<>(Set.of(anthonyDoerr))),
+                createBook("The Midnight Rose", "978-1471133433", "Atria Books",
+                        new HashSet<>(Set.of(historicalRomanceGenre)),
+                        new HashSet<>(Set.of(lucindaRiley))),
+                createBook("The Lincoln Highway", "978-0735222359", "Viking",
+                        new HashSet<>(Set.of(literaryFictionGenre)),
+                        new HashSet<>(Set.of(amorTowles))),
+                createBook("Babel", "978-0063021426", "Harper Voyager",
+                        new HashSet<>(Set.of(fantasyGenre)),
+                        new HashSet<>(Set.of(rfKuang)))
         );
     }
 
-    private Book createBook(String title, String isbn, String publisher, String genre, AuthorDTO... authors) {
-        Book book = new Book(title, isbn, new HashSet<>(), publisher, genre);
-        for (AuthorDTO author : authors) {
-            book.addAuthor(new Author(author));
-        }
-        return book;
+    private BookDTO createBook(String title, String isbn, String publisher,
+                               HashSet<GenreDTO> genreDTOs, HashSet<AuthorDTO> authorDTOs) {
+
+        return new BookDTO(title, isbn,publisher, genreDTOs,  authorDTOs, 1,1 );
     }
 }
