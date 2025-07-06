@@ -18,7 +18,7 @@ public class BookController {
     }
 
     @GetMapping("")
-    List<BookDTO> all() {
+    List<BookDTO> getAllBooks() {
         return bookService.getAllBooks();
     }
 
@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    void addBook(@PathVariable long id) {
+    void deleteBook(@PathVariable long id) {
         bookService.deleteBookById(id);
     }
 }
