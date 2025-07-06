@@ -43,7 +43,7 @@ public class Author {
         this.firstName = authorDTO.firstName();
         this.lastName = authorDTO.lastName();
         this.birthDate = authorDTO.birthDate();
-        this.biography = authorDTO.biographym();
+        this.biography = authorDTO.biography();
         this.pictureURL = authorDTO.pictureURL();
     }
 
