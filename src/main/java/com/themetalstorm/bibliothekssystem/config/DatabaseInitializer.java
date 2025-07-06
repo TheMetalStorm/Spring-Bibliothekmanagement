@@ -3,7 +3,6 @@ package com.themetalstorm.bibliothekssystem.config;
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
 import com.themetalstorm.bibliothekssystem.model.Author;
 import com.themetalstorm.bibliothekssystem.model.Book;
-import com.themetalstorm.bibliothekssystem.repository.AuthorRepository;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.service.AuthorService;
 import org.springframework.boot.CommandLineRunner;
@@ -16,12 +15,6 @@ import java.util.*;
 
 @Configuration
 public class DatabaseInitializer {
-    private final AuthorService authorService;
-
-    public DatabaseInitializer(AuthorService authorService) {
-        this.authorService = authorService;
-    }
-
     @Bean
     @Transactional
     CommandLineRunner initDatabase( AuthorService authorService, BookRepository bookRepository) {

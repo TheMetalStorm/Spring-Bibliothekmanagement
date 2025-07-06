@@ -1,9 +1,13 @@
 package com.themetalstorm.bibliothekssystem.service;
 
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
+import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.model.Author;
 import com.themetalstorm.bibliothekssystem.repository.AuthorRepository;
+import com.themetalstorm.bibliothekssystem.repository.BookRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,8 +16,11 @@ import java.util.List;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    public AuthorService(AuthorRepository authorRepository) {
+    private final BookRepository bookRepository;
+
+    public AuthorService(AuthorRepository authorRepository, BookRepository bookRepository) {
         this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
     }
 
 
@@ -31,5 +38,20 @@ public class AuthorService {
 
     public void deleteAll() {
         authorRepository.deleteAll();
+    }
+
+    public AuthorDTO getAuthorById(long id) {
+        return authorRepository.findById(id).map(AuthorDTO::new).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Author not found with id: " + id
+        ));
+    }
+
+    public List<AuthorDTO> getAllAuthors() {
+        return authorRepository.findAll().stream().map(AuthorDTO::new).toList();
+    }
+
+    public List<BookDTO> getBooksByAuthorId(long id) {
+        return bookRepository.findByAuthors_Id(id).stream().map(BookDTO::new).toList();
     }
 }
