@@ -2,13 +2,25 @@ package com.themetalstorm.bibliothekssystem.model;
 
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +32,18 @@ public class Book {
     @Column(nullable = false)
     private String isbn;
 
-    @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
     private String publisher;
 
     private String genre;
+
+    @Getter
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "book_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -34,97 +51,51 @@ public class Book {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Book(int id, String name, String isbn, String author, String publisher, String genre, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public Book(String name, String isbn, HashSet<Author> authors, String publisher, String genre) {
         this.name = name;
         this.isbn = isbn;
-        this.author = author;
-        this.publisher = publisher;
-        this.genre = genre;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Book(String name, String isbn, String author, String publisher, String genre) {
-        this.name = name;
-        this.isbn = isbn;
-        this.author = author;
+        this.authors = authors;
         this.publisher = publisher;
         this.genre = genre;
     }
     public Book(BookDTO bookDTO) {
         this.name = bookDTO.name();
         this.isbn = bookDTO.isbn();
-        this.author = bookDTO.author();
         this.publisher = bookDTO.publisher();
         this.genre = bookDTO.genre();
-    }
-    public Book() {
+        this.authors =  bookDTO.authors().stream().map(Author::new).collect(Collectors.toCollection(HashSet::new));
 
     }
 
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return id == book.id && Objects.equals(name, book.name) && Objects.equals(isbn, book.isbn) && Objects.equals(publisher, book.publisher) && Objects.equals(genre, book.genre) && Objects.equals(authors, book.authors) && Objects.equals(createdAt, book.createdAt) && Objects.equals(updatedAt, book.updatedAt);
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, isbn, authors, publisher, genre, createdAt, updatedAt);
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + id +
+                ", name='" + name + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", genre='" + genre + '\'' +
+                ", authors=" + authors +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void addAuthor(Author author) {
+        authors.add(author);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 }
