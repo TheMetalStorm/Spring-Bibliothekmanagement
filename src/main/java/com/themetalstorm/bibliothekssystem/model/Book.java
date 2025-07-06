@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -34,7 +35,14 @@ public class Book {
 
     private String publisher;
 
-    private String genre;
+    @Getter
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "book_genres",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
 
     @Getter
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -45,26 +53,34 @@ public class Book {
     )
     private Set<Author> authors = new HashSet<>();
 
+    @Column(nullable = false)
+    private int availableCopies;
+    @Column(nullable = false)
+    private int totalCopies;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Book(String name, String isbn, HashSet<Author> authors, String publisher, String genre) {
+    public Book(String name, String isbn, HashSet<Author> authors, String publisher, HashSet<Genre> genres, @DefaultValue(value = "1") int availableCopies, @DefaultValue(value = "1") int totalCopies) {
         this.name = name;
         this.isbn = isbn;
         this.authors = authors;
         this.publisher = publisher;
-        this.genre = genre;
+        this.genres = genres;
+        this.availableCopies = availableCopies;
+        this.totalCopies = totalCopies;
     }
     public Book(BookDTO bookDTO) {
         this.name = bookDTO.name();
         this.isbn = bookDTO.isbn();
         this.publisher = bookDTO.publisher();
-        this.genre = bookDTO.genre();
+        this.genres = bookDTO.genres().stream().map(Genre::new).collect(Collectors.toCollection(HashSet::new));
         this.authors =  bookDTO.authors().stream().map(Author::new).collect(Collectors.toCollection(HashSet::new));
-
+        this.availableCopies = bookDTO.availableCopies();
+        this.totalCopies = bookDTO.totalCopies();
     }
 
 
@@ -72,26 +88,12 @@ public class Book {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return id == book.id && Objects.equals(name, book.name) && Objects.equals(isbn, book.isbn) && Objects.equals(publisher, book.publisher) && Objects.equals(genre, book.genre) && Objects.equals(authors, book.authors) && Objects.equals(createdAt, book.createdAt) && Objects.equals(updatedAt, book.updatedAt);
+        return id == book.id && Objects.equals(name, book.name) && Objects.equals(isbn, book.isbn) && Objects.equals(publisher, book.publisher) && Objects.equals(genres, book.genres) && Objects.equals(authors, book.authors) && Objects.equals(createdAt, book.createdAt) && Objects.equals(updatedAt, book.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isbn, authors, publisher, genre, createdAt, updatedAt);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "bookId=" + id +
-                ", name='" + name + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", genre='" + genre + '\'' +
-                ", authors=" + authors +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return Objects.hash(id, name, isbn, publisher, genres, authors, createdAt, updatedAt);
     }
 
     public void addAuthor(Author author) {

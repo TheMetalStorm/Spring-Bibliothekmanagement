@@ -32,7 +32,7 @@ public class AuthorService {
     }
 
     public void saveAllAuthors(Collection<AuthorDTO> authors) {
-        List<Author> list = authors.stream().map(Author::new).toList();
+        List<Author> list = authors.stream().filter(authorDTO -> !authorRepository.existsByFirstNameAndLastName(authorDTO.firstName(), authorDTO.lastName())).map(Author::new).toList();
         authorRepository.saveAll(list);
     }
 

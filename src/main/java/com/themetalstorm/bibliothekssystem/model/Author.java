@@ -16,7 +16,11 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "authors")
+@Table(name = "authors",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_author_first_last_name",
+                        columnNames = {"firstName", "lastName"})
+        })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Author {
     @Id
@@ -51,7 +55,7 @@ public class Author {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return id == author.id && Objects.equals(firstName, author.firstName) && Objects.equals(lastName, author.lastName) && Objects.equals(birthDate, author.birthDate) && Objects.equals(biography, author.biography) && Objects.equals(pictureURL, author.pictureURL);
+        return id == author.id && Objects.equals(firstName, author.firstName) && Objects.equals(lastName, author.lastName) && Objects.equals(birthDate, author.birthDate) && Objects.equals(biography, author.biography) && Objects.equals(pictureURL, author.pictureURL) && Objects.equals(books, author.books) && Objects.equals(createdAt, author.createdAt) && Objects.equals(updatedAt, author.updatedAt);
     }
 
     @Override
