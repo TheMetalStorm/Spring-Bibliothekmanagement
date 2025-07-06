@@ -1,5 +1,6 @@
 package com.themetalstorm.bibliothekssystem.service;
 
+import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
 import com.themetalstorm.bibliothekssystem.model.Author;
 import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.repository.AuthorRepository;
@@ -19,12 +20,12 @@ public class BookService {
 
 
     private final BookRepository bookRepository;
-    private final AuthorRepository authorRepository;
+    private final AuthorService authorService;
 
     @Autowired
-    BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
+    BookService(BookRepository bookRepository, AuthorService authorService) {
         this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
+        this.authorService = authorService;
     }
 
     public BookDTO getBookById(long id) {
@@ -43,8 +44,8 @@ public class BookService {
 
     public void addBook(BookDTO book) {
         if(book.authors() != null && !book.authors().isEmpty()) {
-            List<Author> authors = book.authors().stream().map(Author::new).toList();
-            authorRepository.saveAll(authors);
+            List<AuthorDTO> authors = book.authors().stream().toList();
+            authorService.saveAllAuthors(authors);
         }
         bookRepository.save(new Book(book));
     }
