@@ -93,7 +93,7 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isbn, publisher, genres, authors, createdAt, updatedAt);
+        return Objects.hash(id, name, isbn, publisher,  createdAt, updatedAt);
     }
 
     public void addAuthor(Author author) {
