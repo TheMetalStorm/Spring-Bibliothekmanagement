@@ -4,9 +4,12 @@ import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
 
+import com.themetalstorm.bibliothekssystem.model.User;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
+import com.themetalstorm.bibliothekssystem.repository.UserRepository;
 import com.themetalstorm.bibliothekssystem.service.AuthorService;
 import com.themetalstorm.bibliothekssystem.service.BookService;
+import com.themetalstorm.bibliothekssystem.service.MyUserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +22,13 @@ import java.util.*;
 public class DatabaseInitializer {
     @Bean
     @Transactional
-    CommandLineRunner initDatabase(AuthorService authorService, BookRepository bookRepository, BookService bookService) {
+    CommandLineRunner initDatabase(AuthorService authorService, BookRepository bookRepository, BookService bookService, MyUserService userService) {
         return args -> {
             bookRepository.deleteAll();
             authorService.deleteAll();
 
             getSampleBooks().forEach(bookService::addBook);
+            userService.registerUser(new User("simon", "simon"));
         };
     }
 
