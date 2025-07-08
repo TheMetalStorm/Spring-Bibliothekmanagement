@@ -1,11 +1,9 @@
 package com.themetalstorm.bibliothekssystem.repository;
 
 import com.themetalstorm.bibliothekssystem.model.Book;
-import com.themetalstorm.bibliothekssystem.model.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository

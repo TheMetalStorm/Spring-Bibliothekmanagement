@@ -4,21 +4,27 @@ import com.themetalstorm.bibliothekssystem.model.User;
 import com.themetalstorm.bibliothekssystem.model.UserPrincipal;
 import com.themetalstorm.bibliothekssystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MyUserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
-
+    private final JWTService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
     @Autowired
-    public MyUserService(UserRepository userRepository) {
+    public MyUserService(UserRepository userRepository, JWTService jwtService, @Lazy AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -30,8 +36,22 @@ public class MyUserService implements UserDetailsService {
         return new UserPrincipal(byUsername);
     }
 
-    public User registerUser(User user) throws UsernameNotFoundException {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public User register(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return user;
+    }
+
+    public String verify(User user) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(user.getUsername());
+        } else {
+            return "fail";
+        }
+    }
+
+    public void deletAll() {
+        userRepository.deleteAll();
     }
 }
