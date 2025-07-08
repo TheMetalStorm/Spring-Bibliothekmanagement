@@ -7,10 +7,11 @@ This is a Spring Boot project for managing a library system. It allows users to 
 - [x] Book management
 - [x] Author management
 - [x] Genre management
-- [x] Basic Authentication 
+- [x] User creation
+- [x] Authentication: Basic Authentication, JWT Bearer Token
 ## To-Do Features
 
-- [ ] Auth using JWT / Authorization Roles (visitor/user/admin)
+- [ ] Authorization Roles (visitor/user/admin)
 - [ ] Loan system
 - [ ] Search functionality
 - [ ] API documentation
@@ -27,11 +28,12 @@ Dies ist ein Spring-Boot-Projekt zur Verwaltung eines Bibliothekssystems. Es erm
 - [x] Buchverwaltung
 - [x] Autorenverwaltung
 - [x] Genreverwaltung
-- [x] Grundlegende Authentifizierung
+- [x] Nutzererstellung
+- [x] Authentifizierung: Basic Authentication, JWT Bearer Token
 
 ## Zukünftige Funktionen
 
-- [ ] Authentifizierung mittels JWT / Autorisierungsrollen (Besucher/Benutzer/Admin)
+- [ ] Autorisierungsrollen (Besucher/Benutzer/Admin)
 - [ ] Ausleihsystem
 - [ ] Suchfunktion
 - [ ] API-Dokumentation
