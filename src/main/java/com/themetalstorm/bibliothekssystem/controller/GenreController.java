@@ -1,10 +1,6 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
-import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
-import com.themetalstorm.bibliothekssystem.model.Genre;
-import com.themetalstorm.bibliothekssystem.repository.BookRepository;
-import com.themetalstorm.bibliothekssystem.service.BookService;
 import com.themetalstorm.bibliothekssystem.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +12,10 @@ import java.util.List;
 public class GenreController {
 
     private final GenreService genreService;
-    private final BookRepository bookRepository;
 
     @Autowired
-    GenreController(GenreService genreService, BookRepository bookRepository) {
+    GenreController(GenreService genreService) {
         this.genreService = genreService;
-        this.bookRepository = bookRepository;
     }
 
     @GetMapping("")

@@ -3,7 +3,6 @@ package com.themetalstorm.bibliothekssystem.controller;
 import com.themetalstorm.bibliothekssystem.model.User;
 import com.themetalstorm.bibliothekssystem.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
