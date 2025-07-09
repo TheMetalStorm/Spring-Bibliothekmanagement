@@ -1,5 +1,6 @@
 package com.themetalstorm.bibliothekssystem.service;
 
+import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
 import com.themetalstorm.bibliothekssystem.model.Author;
 import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.model.Genre;
@@ -88,9 +89,19 @@ public class BookService {
     }
 
 
-    public Page<BookDTO> getBookBySearch(String search, Integer genreId, Integer authorId, int page, int size, String sortField, String sortDirection) {
+    public Page<BookDTO> getBookBySearch(String search, Integer genreId, Integer authorId, Integer page, Integer size, String sortField, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return bookRepository.findBySearch(search, genreId, authorId, pageable).map(BookDTO::new);
+
+
+        Page<Book> all;
+        if (page == null || size == null ) {
+            System.out.println("\"NULL\" = " + "NULL");
+            all =  bookRepository.findBySearch(search, genreId, authorId, Pageable.unpaged(sort));
+        }
+        else{
+            Pageable pageable = PageRequest.of(page, size, sort);
+            all = bookRepository.findBySearch(search, genreId, authorId,pageable);
+        }
+        return all.map(BookDTO::new);
     }
 }

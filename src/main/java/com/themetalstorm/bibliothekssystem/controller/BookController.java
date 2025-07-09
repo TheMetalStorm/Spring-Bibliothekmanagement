@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -19,11 +17,11 @@ public class BookController {
     }
 
     @GetMapping("")
-    Page<BookDTO> findBySearch(@RequestParam(required = false) String name,
+    Page<BookDTO> findBySearch(@RequestParam(defaultValue = "") String name,
                                @RequestParam(required = false) Integer genreId,
                                @RequestParam(required = false) Integer authorId,
-                               @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int size,
+                               @RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Integer size,
                                @RequestParam(defaultValue = "name") String sortField,
                                @RequestParam(defaultValue = "ASC") String sortDirection) {
 
