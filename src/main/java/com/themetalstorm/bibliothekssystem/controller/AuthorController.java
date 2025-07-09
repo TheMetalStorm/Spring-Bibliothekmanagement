@@ -1,7 +1,6 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
-import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
