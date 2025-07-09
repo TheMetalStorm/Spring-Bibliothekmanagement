@@ -23,17 +23,17 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public AuthorDTO getAuthor(@PathVariable long id) {
+    public AuthorDTO getAuthor(@PathVariable int id) {
         return authorService.getAuthorById(id);
     }
 
     @GetMapping("/{id}/books")
-    public List<BookDTO> getBooksByAuthor(@PathVariable long id) {
+    public List<BookDTO> getBooksByAuthor(@PathVariable int id) {
         return authorService.getBooksByAuthorId(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAuthor(@PathVariable long id) {
+    public void deleteAuthor(@PathVariable int id) {
         authorService.deleteById(id);
     }
 }

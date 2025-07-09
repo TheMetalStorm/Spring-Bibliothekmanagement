@@ -40,7 +40,7 @@ public class BookService {
         this.genreRepository = genreRepository;
     }
 
-    public BookDTO getBookById(long id) {
+    public BookDTO getBookById(int id) {
         return bookRepository.findById(id).map(BookDTO::new).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Book not found with id: " + id
@@ -53,7 +53,7 @@ public class BookService {
     }
 
 
-    public void addBook(BookDTO bookDTO) {
+    public BookDTO addBook(BookDTO bookDTO) {
         Book book = new Book(bookDTO);
         for (Author author : book.getAuthors()) {
             Optional<Author> existingAuthor = authorRepository.findByFirstNameAndLastName(
@@ -77,10 +77,10 @@ public class BookService {
         }
 
 
-        bookRepository.save(book);
+        return new BookDTO(bookRepository.save(book));
     }
 
-    public void deleteBookById(long id) {
+    public void deleteBookById(int id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Book not found with id: " + id
@@ -89,4 +89,7 @@ public class BookService {
     }
 
 
+    public List<BookDTO> getBookByGenreAndAuthor(String genre, String author) {
+        return null;//bookRepository.findBy
+    }
 }

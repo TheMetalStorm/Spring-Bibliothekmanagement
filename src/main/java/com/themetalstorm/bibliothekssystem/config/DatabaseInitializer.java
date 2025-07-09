@@ -37,163 +37,163 @@ public class DatabaseInitializer {
 
     private List<BookDTO> getSampleBooks() {
         // First create all authors
-        AuthorDTO harperLee = new AuthorDTO("Harper", "Lee", LocalDate.of(1926, 4, 28),
+        AuthorDTO harperLee = new AuthorDTO(null,"Harper", "Lee", LocalDate.of(1926, 4, 28),
                 "Pulitzer Prize-winning author of To Kill a Mockingbird", null);
 
-        AuthorDTO georgeOrwell = new AuthorDTO("George", "Orwell", LocalDate.of(1903, 6, 25),
+        AuthorDTO georgeOrwell = new AuthorDTO(null, "George", "Orwell", LocalDate.of(1903, 6, 25),
                 "English novelist famous for 1984 and Animal Farm", null);
 
-        AuthorDTO fScottFitzgerald = new AuthorDTO("F. Scott", "Fitzgerald", LocalDate.of(1896, 9, 24),
+        AuthorDTO fScottFitzgerald = new AuthorDTO(null, "F. Scott", "Fitzgerald", LocalDate.of(1896, 9, 24),
                 "American author of The Great Gatsby", null);
 
-        AuthorDTO jrrTolkien = new AuthorDTO("J.R.R.", "Tolkien", LocalDate.of(1892, 1, 3),
+        AuthorDTO jrrTolkien = new AuthorDTO(null, "J.R.R.", "Tolkien", LocalDate.of(1892, 1, 3),
                 "Creator of Middle-earth and author of The Lord of the Rings", null);
 
-        AuthorDTO janeAusten = new AuthorDTO("Jane", "Austen", LocalDate.of(1775, 12, 16),
+        AuthorDTO janeAusten = new AuthorDTO(null, "Jane", "Austen", LocalDate.of(1775, 12, 16),
                 "English novelist known for Pride and Prejudice", null);
 
-        AuthorDTO anneFrank = new AuthorDTO("Anne", "Frank", LocalDate.of(1929, 6, 12),
+        AuthorDTO anneFrank = new AuthorDTO(null, "Anne", "Frank", LocalDate.of(1929, 6, 12),
                 "Diary writer documenting her life in hiding during WWII", null);
 
-        AuthorDTO pauloCoelho = new AuthorDTO("Paulo", "Coelho", LocalDate.of(1947, 8, 24),
+        AuthorDTO pauloCoelho = new AuthorDTO(null, "Paulo", "Coelho", LocalDate.of(1947, 8, 24),
                 "Brazilian author of The Alchemist", null);
 
-        AuthorDTO aldousHuxley = new AuthorDTO("Aldous", "Huxley", LocalDate.of(1894, 7, 26),
+        AuthorDTO aldousHuxley = new AuthorDTO(null, "Aldous", "Huxley", LocalDate.of(1894, 7, 26),
                 "English writer of Brave New World", null);
 
-        AuthorDTO johnSteinbeck = new AuthorDTO("John", "Steinbeck", LocalDate.of(1902, 2, 27),
+        AuthorDTO johnSteinbeck = new AuthorDTO(null, "John", "Steinbeck", LocalDate.of(1902, 2, 27),
                 "American author of The Grapes of Wrath", null);
 
-        AuthorDTO markusZusak = new AuthorDTO("Markus", "Zusak", LocalDate.of(1975, 6, 23),
+        AuthorDTO markusZusak = new AuthorDTO(null, "Markus", "Zusak", LocalDate.of(1975, 6, 23),
                 "Australian author of The Book Thief", null);
 
-        AuthorDTO khaledHosseini = new AuthorDTO("Khaled", "Hosseini", LocalDate.of(1965, 3, 4),
+        AuthorDTO khaledHosseini = new AuthorDTO(null, "Khaled", "Hosseini", LocalDate.of(1965, 3, 4),
                 "Afghan-American author of The Kite Runner", null);
 
-        AuthorDTO suzanneCollins = new AuthorDTO("Suzanne", "Collins", LocalDate.of(1962, 8, 10),
+        AuthorDTO suzanneCollins = new AuthorDTO(null, "Suzanne", "Collins", LocalDate.of(1962, 8, 10),
                 "Author of The Hunger Games trilogy", null);
 
-        AuthorDTO johnGreen = new AuthorDTO("John", "Green", LocalDate.of(1977, 8, 24),
+        AuthorDTO johnGreen = new AuthorDTO(null, "John", "Green", LocalDate.of(1977, 8, 24),
                 "Young adult author of The Fault in Our Stars", null);
 
-        AuthorDTO gillianFlynn = new AuthorDTO("Gillian", "Flynn", LocalDate.of(1971, 2, 24),
+        AuthorDTO gillianFlynn = new AuthorDTO(null, "Gillian", "Flynn", LocalDate.of(1971, 2, 24),
                 "Author of the thriller Gone Girl", null);
 
-        AuthorDTO paulaHawkins = new AuthorDTO("Paula", "Hawkins", LocalDate.of(1972, 8, 26),
+        AuthorDTO paulaHawkins = new AuthorDTO(null, "Paula", "Hawkins", LocalDate.of(1972, 8, 26),
                 "Author of The Girl on the Train", null);
 
-        AuthorDTO danBrown = new AuthorDTO("Dan", "Brown", LocalDate.of(1964, 6, 22),
+        AuthorDTO danBrown = new AuthorDTO(null, "Dan", "Brown", LocalDate.of(1964, 6, 22),
                 "Author of The Da Vinci Code", null);
 
-        AuthorDTO stephenKing = new AuthorDTO("Stephen", "King", LocalDate.of(1947, 9, 21),
+        AuthorDTO stephenKing = new AuthorDTO(null, "Stephen", "King", LocalDate.of(1947, 9, 21),
                 "Master of horror fiction", null);
 
-        AuthorDTO cormacMcCarthy = new AuthorDTO("Cormac", "McCarthy", LocalDate.of(1933, 7, 20),
+        AuthorDTO cormacMcCarthy = new AuthorDTO(null, "Cormac", "McCarthy", LocalDate.of(1933, 7, 20),
                 "American novelist known for The Road", null);
 
-        AuthorDTO georgeMartin = new AuthorDTO("George R.R.", "Martin", LocalDate.of(1948, 9, 20),
+        AuthorDTO georgeMartin = new AuthorDTO(null, "George R.R.", "Martin", LocalDate.of(1948, 9, 20),
                 "Author of A Song of Ice and Fire series", null);
 
-        AuthorDTO margaretAtwood = new AuthorDTO("Margaret", "Atwood", LocalDate.of(1939, 11, 18),
+        AuthorDTO margaretAtwood = new AuthorDTO(null, "Margaret", "Atwood", LocalDate.of(1939, 11, 18),
                 "Canadian author of The Handmaid's Tale", null);
 
-        AuthorDTO andyWeir = new AuthorDTO("Andy", "Weir", LocalDate.of(1972, 6, 16),
+        AuthorDTO andyWeir = new AuthorDTO(null, "Andy", "Weir", LocalDate.of(1972, 6, 16),
                 "Author of The Martian and Project Hail Mary", null);
 
-        AuthorDTO taraWestover = new AuthorDTO("Tara", "Westover", LocalDate.of(1986, 9, 27),
+        AuthorDTO taraWestover = new AuthorDTO(null, "Tara", "Westover", LocalDate.of(1986, 9, 27),
                 "Author of the memoir Educated", null);
 
-        AuthorDTO yuvalHarari = new AuthorDTO("Yuval Noah", "Harari", LocalDate.of(1976, 2, 24),
+        AuthorDTO yuvalHarari = new AuthorDTO(null, "Yuval Noah", "Harari", LocalDate.of(1976, 2, 24),
                 "Historian and author of Sapiens", null);
 
-        AuthorDTO alexMichaelides = new AuthorDTO("Alex", "Michaelides", LocalDate.of(1977, 9, 4),
+        AuthorDTO alexMichaelides = new AuthorDTO(null, "Alex", "Michaelides", LocalDate.of(1977, 9, 4),
                 "Author of The Silent Patient", null);
 
-        AuthorDTO deliaOwens = new AuthorDTO("Delia", "Owens", LocalDate.of(1949, 12, 4),
+        AuthorDTO deliaOwens = new AuthorDTO(null, "Delia", "Owens", LocalDate.of(1949, 12, 4),
                 "Author of Where the Crawdads Sing", null);
 
-        AuthorDTO jamesClear = new AuthorDTO("James", "Clear", LocalDate.of(1986, 1, 22),
+        AuthorDTO jamesClear = new AuthorDTO(null, "James", "Clear", LocalDate.of(1986, 1, 22),
                 "Author of Atomic Habits", null);
 
-        AuthorDTO michelleObama = new AuthorDTO("Michelle", "Obama", LocalDate.of(1964, 1, 17),
+        AuthorDTO michelleObama = new AuthorDTO(null, "Michelle", "Obama", LocalDate.of(1964, 1, 17),
                 "Former First Lady and author of Becoming", null);
 
-        AuthorDTO mattHaig = new AuthorDTO("Matt", "Haig", LocalDate.of(1975, 7, 3),
+        AuthorDTO mattHaig = new AuthorDTO(null, "Matt", "Haig", LocalDate.of(1975, 7, 3),
                 "Author of The Midnight Library", null);
 
-        AuthorDTO madelineMiller = new AuthorDTO("Madeline", "Miller", LocalDate.of(1978, 7, 24),
+        AuthorDTO madelineMiller = new AuthorDTO(null, "Madeline", "Miller", LocalDate.of(1978, 7, 24),
                 "Author of Circe and The Song of Achilles", null);
 
-        AuthorDTO sallyRooney = new AuthorDTO("Sally", "Rooney", LocalDate.of(1991, 2, 20),
+        AuthorDTO sallyRooney = new AuthorDTO(null, "Sally", "Rooney", LocalDate.of(1991, 2, 20),
                 "Author of Normal People", null);
 
-        AuthorDTO taylorReid = new AuthorDTO("Taylor Jenkins", "Reid", LocalDate.of(1983, 12, 20),
+        AuthorDTO taylorReid = new AuthorDTO(null, "Taylor Jenkins", "Reid", LocalDate.of(1983, 12, 20),
                 "Author of The Seven Husbands of Evelyn Hugo", null);
 
-        AuthorDTO frankHerbert = new AuthorDTO("Frank", "Herbert", LocalDate.of(1920, 10, 8),
+        AuthorDTO frankHerbert = new AuthorDTO(null, "Frank", "Herbert", LocalDate.of(1920, 10, 8),
                 "Author of Dune", null);
 
-        AuthorDTO britBennett = new AuthorDTO("Brit", "Bennett", LocalDate.of(1989, 10, 17),
+        AuthorDTO britBennett = new AuthorDTO(null, "Brit", "Bennett", LocalDate.of(1989, 10, 17),
                 "Author of The Vanishing Half", null);
 
-        AuthorDTO kazuoIshiguro = new AuthorDTO("Kazuo", "Ishiguro", LocalDate.of(1954, 11, 8),
+        AuthorDTO kazuoIshiguro = new AuthorDTO(null, "Kazuo", "Ishiguro", LocalDate.of(1954, 11, 8),
                 "Nobel Prize-winning author of Klara and the Sun", null);
 
-        AuthorDTO veSchwab = new AuthorDTO("V.E.", "Schwab", LocalDate.of(1987, 7, 7),
+        AuthorDTO veSchwab = new AuthorDTO(null, "V.E.", "Schwab", LocalDate.of(1987, 7, 7),
                 "Author of The Invisible Life of Addie LaRue", null);
 
-        AuthorDTO michelleZauner = new AuthorDTO("Michelle", "Zauner", LocalDate.of(1989, 3, 29),
+        AuthorDTO michelleZauner = new AuthorDTO(null, "Michelle", "Zauner", LocalDate.of(1989, 3, 29),
                 "Author of Crying in H Mart", null);
 
-        AuthorDTO tjKlune = new AuthorDTO("TJ", "Klune", LocalDate.of(1982, 5, 20),
+        AuthorDTO tjKlune = new AuthorDTO(null, "TJ", "Klune", LocalDate.of(1982, 5, 20),
                 "Author of The House in the Cerulean Sea", null);
 
-        AuthorDTO minJinLee = new AuthorDTO("Min Jin", "Lee", LocalDate.of(1968, 11, 11),
+        AuthorDTO minJinLee = new AuthorDTO(null, "Min Jin", "Lee", LocalDate.of(1968, 11, 11),
                 "Author of Pachinko", null);
 
-        AuthorDTO anthonyDoerr = new AuthorDTO("Anthony", "Doerr", LocalDate.of(1973, 10, 27),
+        AuthorDTO anthonyDoerr = new AuthorDTO(null, "Anthony", "Doerr", LocalDate.of(1973, 10, 27),
                 "Pulitzer Prize-winning author of All the Light We Cannot See", null);
 
-        AuthorDTO celesteNg = new AuthorDTO("Celeste", "Ng", LocalDate.of(1980, 7, 30),
+        AuthorDTO celesteNg = new AuthorDTO(null, "Celeste", "Ng", LocalDate.of(1980, 7, 30),
                 "Author of Little Fires Everywhere", null);
 
-        AuthorDTO donnaTartt = new AuthorDTO("Donna", "Tartt", LocalDate.of(1963, 12, 23),
+        AuthorDTO donnaTartt = new AuthorDTO(null, "Donna", "Tartt", LocalDate.of(1963, 12, 23),
                 "Pulitzer Prize-winning author of The Goldfinch", null);
 
-        AuthorDTO richardOsman = new AuthorDTO("Richard", "Osman", LocalDate.of(1970, 11, 28),
+        AuthorDTO richardOsman = new AuthorDTO(null, "Richard", "Osman", LocalDate.of(1970, 11, 28),
                 "Author of The Thursday Murder Club", null);
 
-        AuthorDTO lucindaRiley = new AuthorDTO("Lucinda", "Riley", LocalDate.of(1965, 2, 16),
+        AuthorDTO lucindaRiley = new AuthorDTO(null, "Lucinda", "Riley", LocalDate.of(1965, 2, 16),
                 "Author of The Midnight Rose", null);
 
-        AuthorDTO amorTowles = new AuthorDTO("Amor", "Towles", LocalDate.of(1964, 10, 22),
+        AuthorDTO amorTowles = new AuthorDTO(null, "Amor", "Towles", LocalDate.of(1964, 10, 22),
                 "Author of The Lincoln Highway", null);
 
-        AuthorDTO rfKuang = new AuthorDTO("R.F.", "Kuang", LocalDate.of(1996, 5, 29),
+        AuthorDTO rfKuang = new AuthorDTO(null, "R.F.", "Kuang", LocalDate.of(1996, 5, 29),
                 "Author of Babel", null);
 
         // Create genre DTOs
-        GenreDTO classicGenre = new GenreDTO("Classic", "Works of enduring artistic quality and timeless appeal");
-        GenreDTO dystopianGenre = new GenreDTO("Dystopian", "Fictional societies that are undesirable or frightening");
-        GenreDTO fantasyGenre = new GenreDTO("Fantasy", "Imaginary worlds and magical elements");
-        GenreDTO romanceGenre = new GenreDTO("Romance", "Stories focusing on love and relationships");
-        GenreDTO biographyGenre = new GenreDTO("Biography", "Non-fictional accounts of people's lives");
-        GenreDTO politicalSatireGenre = new GenreDTO("Political Satire", "Uses humor to critique politics");
-        GenreDTO historicalGenre = new GenreDTO("Historical", "Set in the past with historical context");
-        GenreDTO historicalFictionGenre = new GenreDTO("Historical Fiction", "Fictional stories set in historical periods");
-        GenreDTO youngAdultGenre = new GenreDTO("Young Adult", "Books aimed at teenage readers");
-        GenreDTO thrillerGenre = new GenreDTO("Thriller", "Fast-paced, suspenseful stories");
-        GenreDTO mysteryGenre = new GenreDTO("Mystery", "Stories involving puzzles or crimes to solve");
-        GenreDTO horrorGenre = new GenreDTO("Horror", "Intended to scare or unsettle readers");
-        GenreDTO postApocalypticGenre = new GenreDTO("Post-Apocalyptic", "Set after a catastrophic event");
-        GenreDTO scienceFictionGenre = new GenreDTO("Science Fiction", "Futuristic technology and scientific concepts");
-        GenreDTO memoirGenre = new GenreDTO("Memoir", "Personal accounts of specific life experiences");
-        GenreDTO anthropologyGenre = new GenreDTO("Anthropology", "Study of human societies and cultures");
-        GenreDTO psychologicalThrillerGenre = new GenreDTO("Psychological Thriller", "Focuses on unstable emotional states");
-        GenreDTO selfHelpGenre = new GenreDTO("Self-Help", "Books intended to help readers improve themselves");
-        GenreDTO mythologyGenre = new GenreDTO("Mythology", "Based on or relating to myths");
-        GenreDTO literaryFictionGenre = new GenreDTO("Literary Fiction", "Character-driven stories with artistic merit");
-        GenreDTO historicalRomanceGenre = new GenreDTO("Historical Romance", "Romance novels set in historical periods");
+        GenreDTO classicGenre = new GenreDTO(null, "Classic", "Works of enduring artistic quality and timeless appeal");
+        GenreDTO dystopianGenre = new GenreDTO(null, "Dystopian", "Fictional societies that are undesirable or frightening");
+        GenreDTO fantasyGenre = new GenreDTO(null, "Fantasy", "Imaginary worlds and magical elements");
+        GenreDTO romanceGenre = new GenreDTO(null, "Romance", "Stories focusing on love and relationships");
+        GenreDTO biographyGenre = new GenreDTO(null, "Biography", "Non-fictional accounts of people's lives");
+        GenreDTO politicalSatireGenre = new GenreDTO(null, "Political Satire", "Uses humor to critique politics");
+        GenreDTO historicalGenre = new GenreDTO(null, "Historical", "Set in the past with historical context");
+        GenreDTO historicalFictionGenre = new GenreDTO(null, "Historical Fiction", "Fictional stories set in historical periods");
+        GenreDTO youngAdultGenre = new GenreDTO(null, "Young Adult", "Books aimed at teenage readers");
+        GenreDTO thrillerGenre = new GenreDTO(null, "Thriller", "Fast-paced, suspenseful stories");
+        GenreDTO mysteryGenre = new GenreDTO(null, "Mystery", "Stories involving puzzles or crimes to solve");
+        GenreDTO horrorGenre = new GenreDTO(null, "Horror", "Intended to scare or unsettle readers");
+        GenreDTO postApocalypticGenre = new GenreDTO(null, "Post-Apocalyptic", "Set after a catastrophic event");
+        GenreDTO scienceFictionGenre = new GenreDTO(null, "Science Fiction", "Futuristic technology and scientific concepts");
+        GenreDTO memoirGenre = new GenreDTO(null, "Memoir", "Personal accounts of specific life experiences");
+        GenreDTO anthropologyGenre = new GenreDTO(null, "Anthropology", "Study of human societies and cultures");
+        GenreDTO psychologicalThrillerGenre = new GenreDTO(null, "Psychological Thriller", "Focuses on unstable emotional states");
+        GenreDTO selfHelpGenre = new GenreDTO(null, "Self-Help", "Books intended to help readers improve themselves");
+        GenreDTO mythologyGenre = new GenreDTO(null, "Mythology", "Based on or relating to myths");
+        GenreDTO literaryFictionGenre = new GenreDTO(null, "Literary Fiction", "Character-driven stories with artistic merit");
+        GenreDTO historicalRomanceGenre = new GenreDTO(null, "Historical Romance", "Romance novels set in historical periods");
 
         // Then create books with author sets and genres
         return List.of(
@@ -353,6 +353,6 @@ public class DatabaseInitializer {
     private BookDTO createBook(String title, String isbn, String publisher,
                                HashSet<GenreDTO> genreDTOs, HashSet<AuthorDTO> authorDTOs) {
 
-        return new BookDTO(title, isbn,publisher, genreDTOs,  authorDTOs, 1,1 );
+        return new BookDTO(null, title, isbn,publisher, genreDTOs,  authorDTOs, 1,1 );
     }
 }

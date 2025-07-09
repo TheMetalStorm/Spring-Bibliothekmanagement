@@ -72,7 +72,7 @@ public class MyUserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(int id) {
         return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "User not found with id: " + id

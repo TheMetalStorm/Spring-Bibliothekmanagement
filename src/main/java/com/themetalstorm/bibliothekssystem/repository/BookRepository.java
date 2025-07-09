@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findByAuthors_Id(Long authorId);
+public interface BookRepository extends JpaRepository<Book, Integer> {
+    List<Book> findByAuthors_Id(int authorId);
 
-    List<Book> findByGenres_Id(long genreId);
+    List<Book> findByGenres_Id(int genreId);
 
     boolean existsByIsbn(String isbn);
 }

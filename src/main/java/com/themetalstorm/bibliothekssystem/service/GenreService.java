@@ -45,21 +45,21 @@ public class GenreService {
         return list.stream().map(GenreDTO::new).collect(Collectors.toList());
     }
 
-    public GenreDTO getGenreById(long id) {
+    public GenreDTO getGenreById(int id) {
         return genreRepository.findById(id).map(GenreDTO::new).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Author not found with id: " + id
         ));
     }
 
-    public void deleteGenreById(long id) {
+    public void deleteGenreById(int id) {
         Genre genre = genreRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Genre not found with id: " + id
         ));
         genreRepository.deleteById(id);
     }
-    public List<BookDTO> getBooksByGenreId(long id) {
+    public List<BookDTO> getBooksByGenreId(int id) {
         return bookRepository.findByGenres_Id(id).stream().map(BookDTO::new).toList();
     }
 }
