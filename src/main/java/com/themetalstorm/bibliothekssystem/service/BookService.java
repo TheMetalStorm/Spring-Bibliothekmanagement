@@ -8,12 +8,14 @@ import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,11 +88,13 @@ public class BookService {
     }
 
 
-    public List<BookDTO> getBookBySearch(String search, Integer genreId, Integer authorId) {
-        List<Book> byTitle = bookRepository.findBySearch(search, genreId, authorId);
+    public Page<BookDTO> getBookBySearch(String search, Integer genreId, Integer authorId, int page, int size, String sortField, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Book> byTitle = bookRepository.findBySearch(search, genreId, authorId, pageable);
         if (byTitle.isEmpty()) {
-            return new ArrayList<>();
+            return Page.empty();
         }
-        return byTitle.stream().map(BookDTO::new).toList();
+        return byTitle.map(BookDTO::new);
     }
 }
