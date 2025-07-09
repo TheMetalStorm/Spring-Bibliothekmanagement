@@ -1,6 +1,5 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
-import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.service.BookService;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +28,11 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    List<BookDTO> findBySearch(@RequestParam(required = false, defaultValue = "") String name,
-                               @RequestParam(required = false, defaultValue = "") String genre,
-                               @RequestParam(required = false, defaultValue = "") String author) {
-        return bookService.getBookBySearch(name, genre, author);
+    List<BookDTO> findBySearch(@RequestParam(required = false) String name,
+                               @RequestParam(required = false) Integer genreId,
+                               @RequestParam(required = false) Integer authorId)
+         {
+        return bookService.getBookBySearch(name, genreId, authorId);
     }
 
     @PostMapping("")
