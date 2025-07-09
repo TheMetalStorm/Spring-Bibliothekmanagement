@@ -6,4 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
+
+    void deleteByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

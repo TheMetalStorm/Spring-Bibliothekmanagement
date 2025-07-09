@@ -55,14 +55,11 @@ public class BookService {
 
     public void addBook(BookDTO bookDTO) {
         Book book = new Book(bookDTO);
-        // For each author in the book
         for (Author author : book.getAuthors()) {
-            // Check if author already exists
             Optional<Author> existingAuthor = authorRepository.findByFirstNameAndLastName(
                     author.getFirstName(),
                     author.getLastName());
 
-            // If exists, use the existing author instead of creating new one
             existingAuthor.ifPresent(a -> {
                 book.getAuthors().remove(author);
                 book.getAuthors().add(a);
@@ -70,11 +67,9 @@ public class BookService {
         }
 
         for (Genre genre : book.getGenres()) {
-            // Check if author already exists
             Optional<Genre> existingGenre = genreRepository.findByName(
                     genre.getName());
 
-            // If exists, use the existing author instead of creating new one
             existingGenre.ifPresent(g -> {
                 book.getGenres().remove(genre);
                 book.getGenres().add(g);
