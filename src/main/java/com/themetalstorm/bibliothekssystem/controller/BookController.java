@@ -19,16 +19,6 @@ public class BookController {
     }
 
     @GetMapping("")
-    List<BookDTO> getAllBooks() {
-        return bookService.getAllBooks();
-    }
-
-    @GetMapping("/{id}")
-    BookDTO findById(@PathVariable int id) {
-        return bookService.getBookById(id);
-    }
-
-    @GetMapping("/search")
     Page<BookDTO> findBySearch(@RequestParam(required = false) String name,
                                @RequestParam(required = false) Integer genreId,
                                @RequestParam(required = false) Integer authorId,
@@ -39,6 +29,11 @@ public class BookController {
 
 
         return bookService.getBookBySearch(name, genreId, authorId, page, size, sortField, sortDirection);
+    }
+
+    @GetMapping("/{id}")
+    BookDTO findById(@PathVariable int id) {
+        return bookService.getBookById(id);
     }
 
     @PostMapping("")
