@@ -28,10 +28,12 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
-//    @GetMapping("/search")
-//    List<BookDTO> findByGenreAndAuthor(@RequestParam String genre, @RequestParam String author) {
-//        return bookService.getBookByGenreAndAuthor(genre, author);
-//    }
+    @GetMapping("/search")
+    List<BookDTO> findBySearch(@RequestParam(required = false, defaultValue = "") String name,
+                               @RequestParam(required = false, defaultValue = "") String genre,
+                               @RequestParam(required = false, defaultValue = "") String author) {
+        return bookService.getBookBySearch(name, genre, author);
+    }
 
     @PostMapping("")
     @ResponseBody

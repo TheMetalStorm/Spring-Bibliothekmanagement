@@ -1,7 +1,5 @@
 package com.themetalstorm.bibliothekssystem.service;
 
-import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
-import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
 import com.themetalstorm.bibliothekssystem.model.Author;
 import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.model.Genre;
@@ -9,14 +7,13 @@ import com.themetalstorm.bibliothekssystem.repository.AuthorRepository;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.repository.GenreRepository;
-import jakarta.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,7 +86,11 @@ public class BookService {
     }
 
 
-    public List<BookDTO> getBookByGenreAndAuthor(String genre, String author) {
-        return null;//bookRepository.findBy
+    public List<BookDTO> getBookBySearch(String search, String genre, String author) {
+        List<Book> byTitle = bookRepository.findByTitle(search, genre, author);
+        if (byTitle.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return byTitle.stream().map(BookDTO::new).toList();
     }
 }
