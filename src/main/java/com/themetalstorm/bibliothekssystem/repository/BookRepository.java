@@ -3,6 +3,7 @@ package com.themetalstorm.bibliothekssystem.repository;
 import com.themetalstorm.bibliothekssystem.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,13 +14,17 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findByGenres_Id(int genreId);
 
-    @Query("SELECT b FROM Book b " +
+    @Query("SELECT DISTINCT b FROM Book b " +
             "JOIN b.genres g " +
             "JOIN b.authors a " +
-            "WHERE LOWER(b.name) LIKE LOWER(CONCAT('%', :book, '%')) " +
-            "AND LOWER(g.name) LIKE LOWER(CONCAT('%', :genre, '%')) " +
-            "AND (LOWER(CONCAT(a.firstName, ' ', a.lastName)) LIKE LOWER(CONCAT('%', :author, '%')) " +
-            "OR LOWER(CONCAT(a.lastName, ' ', a.firstName)) LIKE LOWER(CONCAT('%', :author, '%')))")
-    List<Book> findByTitle(String book, String genre, String author);
+            "WHERE " +
+            "(:search IS NULL OR LOWER(b.name) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+            "(:genreId IS NULL OR g.id = :genreId) AND " +
+            "(:authorId IS NULL OR a.id = :authorId) " )
+    List<Book> findBySearch(@Param("search") String search,
+                            @Param("genreId") Integer genreId,
+                            @Param("authorId") Integer authorId);
+
+
     boolean existsByIsbn(String isbn);
 }

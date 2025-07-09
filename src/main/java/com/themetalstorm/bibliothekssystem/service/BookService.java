@@ -86,8 +86,8 @@ public class BookService {
     }
 
 
-    public List<BookDTO> getBookBySearch(String search, String genre, String author) {
-        List<Book> byTitle = bookRepository.findByTitle(search, genre, author);
+    public List<BookDTO> getBookBySearch(String search, Integer genreId, Integer authorId) {
+        List<Book> byTitle = bookRepository.findBySearch(search, genreId, authorId);
         if (byTitle.isEmpty()) {
             return new ArrayList<>();
         }
