@@ -51,10 +51,6 @@ public class AuthorService {
         return authorRepository.findAll().stream().map(AuthorDTO::new).toList();
     }
 
-    public List<BookDTO> getBooksByAuthorId(int id) {
-        return bookRepository.findByAuthors_Id(id).stream().map(BookDTO::new).toList();
-    }
-
     //TODO: PUT
 
     public void deleteById(int id) {

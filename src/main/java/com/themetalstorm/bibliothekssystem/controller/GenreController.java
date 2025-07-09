@@ -34,11 +34,6 @@ public class GenreController {
         return genreService.getGenreById(id);
     }
 
-    @GetMapping("/{id}/books")
-    public List<BookDTO> getBooksByGenreId(@PathVariable int id) {
-        return genreService.getBooksByGenreId(id);
-    }
-
     @PostMapping("")
     @ResponseBody
     void addGenre(@RequestBody GenreDTO genre) {

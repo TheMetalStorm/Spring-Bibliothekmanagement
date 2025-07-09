@@ -59,7 +59,4 @@ public class GenreService {
         ));
         genreRepository.deleteById(id);
     }
-    public List<BookDTO> getBooksByGenreId(int id) {
-        return bookRepository.findByGenres_Id(id).stream().map(BookDTO::new).toList();
-    }
 }
