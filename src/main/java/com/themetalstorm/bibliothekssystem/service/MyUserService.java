@@ -69,8 +69,14 @@ public class MyUserService implements UserDetailsService {
         return "fail";
     }
 
-    public Page<User> getAllUsers(int page, int size, String sortField, String sortDirection) {
+    public Page<User> getAllUsers(Integer page, Integer size, String sortField, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
+
+        System.out.println("page = " + page);
+        System.out.println("size = " + size);
+        if(page == null || size == null) {
+            return userRepository.findAll(Pageable.unpaged(sort));
+        }
         Pageable pageable = PageRequest.of(page, size, sort);
         return userRepository.findAll(pageable);
     }

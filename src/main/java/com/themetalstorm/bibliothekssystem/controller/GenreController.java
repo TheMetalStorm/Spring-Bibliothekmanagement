@@ -20,8 +20,8 @@ public class GenreController {
     }
 
     @GetMapping("")
-    Page<GenreDTO> getAllGenres(@RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "10") int size,
+    Page<GenreDTO> getAllGenres(@RequestParam(required = false) Integer page,
+                                @RequestParam(required = false) Integer size,
                                 @RequestParam(defaultValue = "name") String sortField,
                                 @RequestParam(defaultValue = "ASC") String sortDirection) {
         return genreService.getAllGenres(page, size, sortField, sortDirection);

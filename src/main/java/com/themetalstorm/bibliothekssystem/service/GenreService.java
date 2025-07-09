@@ -40,10 +40,19 @@ public class GenreService {
         genreRepository.save(new Genre(genre));
     }
 
-    public Page<GenreDTO> getAllGenres(int page, int size, String sortField, String sortDirection) {
+    public Page<GenreDTO> getAllGenres(Integer page, Integer size, String sortField, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return genreRepository.findAll(pageable).map(GenreDTO::new);
+
+        Page<Genre> all;
+        if(page == null || size == null) {
+            all = genreRepository.findAll(Pageable.unpaged(sort));
+        }
+        else{
+            Pageable pageable = PageRequest.of(page, size, sort);
+            all = genreRepository.findAll(pageable);
+
+        }
+        return all.map(GenreDTO::new);
     }
 
     public GenreDTO getGenreById(int id) {

@@ -50,10 +50,18 @@ public class AuthorService {
         ));
     }
 
-    public Page<AuthorDTO> getAllAuthors(int page, int size, String sortField, String sortDirection) {
+    public Page<AuthorDTO> getAllAuthors(Integer page, Integer size, String sortField, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return authorRepository.findAll(pageable).map(AuthorDTO::new);
+
+        Page<Author> all;
+        if(page == null || size == null ) {
+            all =  authorRepository.findAll(Pageable.unpaged(sort));
+        }
+        else{
+            Pageable pageable = PageRequest.of(page, size, sort);
+            all = authorRepository.findAll(pageable);
+        }
+        return all.map(AuthorDTO::new);
     }
 
     //TODO: PUT

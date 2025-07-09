@@ -18,8 +18,8 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public Page<User> getAllUsers(@RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(defaultValue = "10") int size,
+    public Page<User> getAllUsers(@RequestParam(required = false) Integer page,
+                                  @RequestParam(required = false) Integer size,
                                   @RequestParam(defaultValue = "username") String sortField,
                                   @RequestParam(defaultValue = "ASC") String sortDirection){
         return userService.getAllUsers(page, size, sortField, sortDirection);

@@ -18,8 +18,8 @@ public class AuthorController {
     }
 
     @GetMapping("")
-    public Page<AuthorDTO> getAllAuthors(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size,
+    public Page<AuthorDTO> getAllAuthors(@RequestParam(required = false) Integer page,
+                                         @RequestParam(required = false) Integer size,
                                          @RequestParam(defaultValue = "lastName") String sortField,
                                          @RequestParam(defaultValue = "ASC") String sortDirection)  {
         return authorService.getAllAuthors(page, size, sortField, sortDirection);
