@@ -31,4 +31,9 @@ public class AuthorController {
     public List<BookDTO> getBooksByAuthor(@PathVariable long id) {
         return authorService.getBooksByAuthorId(id);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteAuthor(@PathVariable long id) {
+        authorService.deleteById(id);
+    }
 }

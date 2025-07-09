@@ -34,18 +34,22 @@ public class GenreController {
         return genreService.getGenreById(id);
     }
 
+    @GetMapping("/{id}/books")
+    public List<BookDTO> getBooksByGenreId(@PathVariable long id) {
+        return genreService.getBooksByGenreId(id);
+    }
+
     @PostMapping("")
     @ResponseBody
     void addGenre(@RequestBody GenreDTO genre) {
         genreService.addGenre(genre);
     }
 
+    //TODO: PUT
+
     @DeleteMapping("/{id}")
     void deleteGenreById(@PathVariable long id) {
         genreService.deleteGenreById(id);
     }
-    @GetMapping("/{id}/books")
-    public List<BookDTO> getBooksByGenreId(@PathVariable long id) {
-        return genreService.getBooksByGenreId(id);
-    }
+
 }
