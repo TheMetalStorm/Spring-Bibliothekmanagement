@@ -91,10 +91,6 @@ public class BookService {
     public Page<BookDTO> getBookBySearch(String search, Integer genreId, Integer authorId, int page, int size, String sortField, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Book> byTitle = bookRepository.findBySearch(search, genreId, authorId, pageable);
-        if (byTitle.isEmpty()) {
-            return Page.empty();
-        }
-        return byTitle.map(BookDTO::new);
+        return bookRepository.findBySearch(search, genreId, authorId, pageable).map(BookDTO::new);
     }
 }

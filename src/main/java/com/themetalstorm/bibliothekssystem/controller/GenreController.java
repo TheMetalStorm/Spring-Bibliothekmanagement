@@ -3,6 +3,7 @@ package com.themetalstorm.bibliothekssystem.controller;
 import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
 import com.themetalstorm.bibliothekssystem.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,11 @@ public class GenreController {
     }
 
     @GetMapping("")
-    List<GenreDTO> getAllGenres() {
-        return genreService.getAllGenres();
+    Page<GenreDTO> getAllGenres(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "10") int size,
+                                @RequestParam(defaultValue = "name") String sortField,
+                                @RequestParam(defaultValue = "ASC") String sortDirection) {
+        return genreService.getAllGenres(page, size, sortField, sortDirection);
     }
 
     @GetMapping("/{id}")

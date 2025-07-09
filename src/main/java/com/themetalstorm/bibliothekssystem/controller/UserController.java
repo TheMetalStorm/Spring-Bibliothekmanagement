@@ -3,6 +3,7 @@ package com.themetalstorm.bibliothekssystem.controller;
 import com.themetalstorm.bibliothekssystem.model.User;
 import com.themetalstorm.bibliothekssystem.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,11 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public Page<User> getAllUsers(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size,
+                                  @RequestParam(defaultValue = "username") String sortField,
+                                  @RequestParam(defaultValue = "ASC") String sortDirection){
+        return userService.getAllUsers(page, size, sortField, sortDirection);
     }
 
     @GetMapping("/users/{id}")

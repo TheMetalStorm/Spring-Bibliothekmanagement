@@ -1,10 +1,13 @@
 package com.themetalstorm.bibliothekssystem.service;
 
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
-import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.model.Author;
 import com.themetalstorm.bibliothekssystem.repository.AuthorRepository;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -47,8 +50,10 @@ public class AuthorService {
         ));
     }
 
-    public List<AuthorDTO> getAllAuthors() {
-        return authorRepository.findAll().stream().map(AuthorDTO::new).toList();
+    public Page<AuthorDTO> getAllAuthors(int page, int size, String sortField, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return authorRepository.findAll(pageable).map(AuthorDTO::new);
     }
 
     //TODO: PUT
