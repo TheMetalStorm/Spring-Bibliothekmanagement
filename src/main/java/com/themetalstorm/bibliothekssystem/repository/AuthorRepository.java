@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Integer> {
     List<Author> findByBooks_Id(Long bookId);
 
     boolean existsByFirstNameAndLastName(String s, String s1);

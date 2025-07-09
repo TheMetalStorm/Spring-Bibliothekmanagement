@@ -1,5 +1,6 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
+import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.service.BookService;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +24,25 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    BookDTO findById(@PathVariable long id) {
+    BookDTO findById(@PathVariable int id) {
         return bookService.getBookById(id);
     }
 
+//    @GetMapping("/search")
+//    List<BookDTO> findByGenreAndAuthor(@RequestParam String genre, @RequestParam String author) {
+//        return bookService.getBookByGenreAndAuthor(genre, author);
+//    }
+
     @PostMapping("")
     @ResponseBody
-    void addBook(@RequestBody BookDTO book) {
-        bookService.addBook(book);
+    BookDTO addBook(@RequestBody BookDTO book) {
+        return bookService.addBook(book);
     }
 
     //TODO: PUT
 
     @DeleteMapping("/{id}")
-    void deleteBook(@PathVariable long id) {
+    void deleteBook(@PathVariable int id) {
         bookService.deleteBookById(id);
     }
 }

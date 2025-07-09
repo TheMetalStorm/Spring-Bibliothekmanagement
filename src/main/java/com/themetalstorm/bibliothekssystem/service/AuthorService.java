@@ -40,7 +40,7 @@ public class AuthorService {
         authorRepository.deleteAll();
     }
 
-    public AuthorDTO getAuthorById(long id) {
+    public AuthorDTO getAuthorById(int id) {
         return authorRepository.findById(id).map(AuthorDTO::new).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Author not found with id: " + id
@@ -51,13 +51,13 @@ public class AuthorService {
         return authorRepository.findAll().stream().map(AuthorDTO::new).toList();
     }
 
-    public List<BookDTO> getBooksByAuthorId(long id) {
+    public List<BookDTO> getBooksByAuthorId(int id) {
         return bookRepository.findByAuthors_Id(id).stream().map(BookDTO::new).toList();
     }
 
     //TODO: PUT
 
-    public void deleteById(long id) {
+    public void deleteById(int id) {
         bookRepository.deleteById(id);
     }
 }
