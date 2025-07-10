@@ -17,8 +17,8 @@ This is a Spring Boot project for managing a library system. It allows users to 
 
 - [ ] Proper Error Responses
 - [ ] Authorization Roles (visitor/user/admin)
-- [ ] API documentation
 - [ ] Comprehensive testing
+- [ ] API documentation
 
 ---
 
@@ -40,5 +40,5 @@ Dies ist ein Spring-Boot-Projekt zur Verwaltung eines Bibliothekssystems. Es erm
 
 - [ ] Ordentliche Fehlerbehandlung
 - [ ] Autorisierungsrollen (Besucher/Benutzer/Admin)
-- [ ] API-Dokumentation
 - [ ] Umfassende Tests
+- [ ] API-Dokumentation
