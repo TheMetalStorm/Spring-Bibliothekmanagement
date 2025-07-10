@@ -10,12 +10,13 @@ This is a Spring Boot project for managing a library system. It allows users to 
 - [x] User management
 - [x] Authentication with JWT Bearer Token
 - [x] Search functionality
+- [x] Loan system
+
 
 ## To-Do Features
 
 - [ ] Proper Error Responses
 - [ ] Authorization Roles (visitor/user/admin)
-- [ ] Loan system
 - [ ] API documentation
 - [ ] Comprehensive testing
 
@@ -33,11 +34,11 @@ Dies ist ein Spring-Boot-Projekt zur Verwaltung eines Bibliothekssystems. Es erm
 - [x] Nutzerverwaltung 
 - [x] Authentifizierung mit JWT Bearer Token
 - [x] Suchfunktion
+- [x] Ausleihsystem
 
 ## Zukünftige Funktionen
 
 - [ ] Ordentliche Fehlerbehandlung
 - [ ] Autorisierungsrollen (Besucher/Benutzer/Admin)
-- [ ] Ausleihsystem
 - [ ] API-Dokumentation
 - [ ] Umfassende Tests
