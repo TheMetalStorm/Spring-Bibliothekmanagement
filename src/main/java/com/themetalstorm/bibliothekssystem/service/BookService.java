@@ -46,6 +46,14 @@ public class BookService {
                 "Book not found with id: " + id
         ));
     }
+
+    public Book getWholeBookById(int id) {
+        return bookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Book not found with id: " + id
+        ));
+    }
+
     public List<BookDTO> getAllBooks() {
         return bookRepository.findAll().stream()
                 .map(BookDTO::new)
