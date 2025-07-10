@@ -5,7 +5,8 @@ import com.themetalstorm.bibliothekssystem.service.AuthorService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+//TODO: check permissions once authorization is implemented
+//TODO: return Response Entity when appropriate
 
 @RestController
 @RequestMapping("/authors")
