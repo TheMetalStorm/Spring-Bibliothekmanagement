@@ -42,6 +42,13 @@ public class MyUserService implements UserDetailsService {
         return new UserPrincipal(byUsername);
     }
 
+    public User loadWholeUserByUsername(String username)  {
+        User byUsername = userRepository.findByUsername(username);
+        if(byUsername == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return byUsername;
+    }
     public User register(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
