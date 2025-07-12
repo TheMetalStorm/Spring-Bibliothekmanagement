@@ -4,6 +4,7 @@ import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
 import com.themetalstorm.bibliothekssystem.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 //TODO: check permissions once authorization is implemented
@@ -33,6 +34,7 @@ public class GenreController {
         return genreService.getGenreById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     @ResponseBody
     void addGenre(@RequestBody GenreDTO genre) {
@@ -41,6 +43,7 @@ public class GenreController {
 
     //TODO: PUT
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     void deleteGenreById(@PathVariable int id) {
         genreService.deleteGenreById(id);

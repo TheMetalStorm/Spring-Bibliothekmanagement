@@ -30,16 +30,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    //TODO: most post put and delete should only be allowed by admin user, rn every logged in user is allowed
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/register", "/login").permitAll()
-                        .requestMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT).hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

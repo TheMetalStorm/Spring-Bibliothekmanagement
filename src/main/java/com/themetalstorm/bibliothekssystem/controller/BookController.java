@@ -4,6 +4,7 @@ import com.themetalstorm.bibliothekssystem.service.BookService;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 //TODO: check permissions once authorization is implemented
@@ -37,6 +38,7 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     @ResponseBody
     BookDTO addBook(@RequestBody BookDTO book) {
@@ -45,6 +47,7 @@ public class BookController {
 
     //TODO: PUT
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     void deleteBook(@PathVariable int id) {
         bookService.deleteBookById(id);

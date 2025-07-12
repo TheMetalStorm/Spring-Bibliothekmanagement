@@ -3,6 +3,7 @@ package com.themetalstorm.bibliothekssystem.controller;
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
 import com.themetalstorm.bibliothekssystem.service.AuthorService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 //TODO: check permissions once authorization is implemented
@@ -31,6 +32,7 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteAuthor(@PathVariable int id) {
         authorService.deleteById(id);
