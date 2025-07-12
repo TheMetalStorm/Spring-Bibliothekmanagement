@@ -6,6 +6,7 @@ import com.themetalstorm.bibliothekssystem.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     public Page<User> getAllUsers(@RequestParam(required = false) Integer page,
                                   @RequestParam(required = false) Integer size,
@@ -32,6 +34,7 @@ public class UserController {
         return userService.getAllUsers(page, size, sortField, sortDirection);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable int id){
         return userService.getUserById(id);
@@ -62,8 +65,8 @@ public class UserController {
         return userService.verify(user);
     }
 
-    //TODO: PUT to update User
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/deleteUser/{username}")
     public String deleteUser(@PathVariable String username){
         return userService.deleteByName(username);
