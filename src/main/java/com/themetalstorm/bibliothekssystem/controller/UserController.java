@@ -1,10 +1,16 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
+import com.themetalstorm.bibliothekssystem.model.Role;
 import com.themetalstorm.bibliothekssystem.model.User;
 import com.themetalstorm.bibliothekssystem.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 //TODO: check permissions once authorization is implemented
 //TODO: return Response Entity when appropriate
@@ -32,9 +38,24 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userService.register(user);
+    public User registerUser(@RequestBody User user)
+    {
+        if(user.getRole().equals(Role.ROLE_ADMIN)) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+            boolean senderIsAdmin = auth.getAuthorities().stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
+
+            if(senderIsAdmin){
+                return userService.register(user);
+            }
+            else throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        else{
+            return userService.register(user);
+        }
     }
+
 
     @PostMapping("/login")
     public String login(@RequestBody User user){

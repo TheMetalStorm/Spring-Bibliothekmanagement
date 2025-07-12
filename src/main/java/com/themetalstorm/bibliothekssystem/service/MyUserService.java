@@ -58,7 +58,8 @@ public class MyUserService implements UserDetailsService {
     public String verify(User user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            User fromDB = userRepository.findByUsername(user.getUsername());
+            return jwtService.generateToken(fromDB);
         } else {
             return "fail";
         }
