@@ -9,14 +9,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
-    private User user;
+    private final User user;
     public UserPrincipal(User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        Role role = user.getRole();
+        return Collections.singleton(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

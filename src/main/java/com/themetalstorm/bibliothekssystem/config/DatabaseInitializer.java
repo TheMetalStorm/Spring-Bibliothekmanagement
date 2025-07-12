@@ -4,6 +4,7 @@ import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
 
+import com.themetalstorm.bibliothekssystem.model.Role;
 import com.themetalstorm.bibliothekssystem.model.User;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.service.AuthorService;
@@ -31,7 +32,8 @@ public class DatabaseInitializer {
             userService.deletAll();
 
             getSampleBooks().forEach(bookService::addBook);
-            userService.register(new User("simon", "simon"));
+            userService.register(new User("simon", "simon", Role.ROLE_ADMIN));
+            userService.register(new User("user1", "user1", Role.ROLE_USER));
         };
     }
 
