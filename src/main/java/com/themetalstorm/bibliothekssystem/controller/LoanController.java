@@ -7,7 +7,6 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//TODO: check permissions once authorization is implemented
 //TODO: return Response Entity when appropriate
 @RestController
 public class LoanController {

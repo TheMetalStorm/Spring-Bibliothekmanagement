@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-//TODO: check permissions once authorization is implemented
 //TODO: return Response Entity when appropriate
 
 @RestController
