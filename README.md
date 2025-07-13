@@ -16,13 +16,13 @@ This behavior is intentional for demonstration purposes and can be easily change
 - [x] Search functionality
 - [x] Loan system
 - [x] Uniform error handling and server responses
+- [x] API documentation ([API_DOCUMENTATION.md](API_DOCUMENTATION.md))
 
 
 ## To-Dos
 
 - [ ] Implement a few missing API endpoints (TODOs in Code)
 - [ ] Comprehensive testing
-- [ ] API documentation
 
 ---
 
@@ -44,9 +44,9 @@ Dieses Verhalten ist bewusst so gewählt und kann mit ein paar kleinen Änderung
 - [x] Suchfunktion
 - [x] Ausleihsystem
 - [x] Einheitliche Fehlerbehandlung und Server Responses
+- [x] API-Dokumentation ([API_DOCUMENTATION.md](API_DOCUMENTATION.md))
 
 ## To-Dos
 
 - [ ] Ein paar fehlende API Endpunkte implementieren (siehe TODOs im Code)
 - [ ] Umfassende Tests
-- [ ] API-Dokumentation
