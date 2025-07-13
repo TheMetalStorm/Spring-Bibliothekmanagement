@@ -1,0 +1,49 @@
+HOW TO RUN
+
+1. Ensure you have Docker and Docker Compose installed on your machine.
+
+2. Unzip the release bundle:
+   unzip release-bundle.zip
+
+3. Navigate to the extracted 'release' directory:
+   cd release
+
+4. Start the application using Docker Compose:
+   docker-compose up -d
+
+5. Wait a few moments for the services to start.
+
+6. Start API Server
+   java -jar Library-System-API-<VERSION>.jar
+
+7. Access the application at:
+   http://localhost:8080
+
+8. To stop the application, run:
+   docker-compose down
+
+---
+
+ANLEITUNG ZUM STARTEN
+
+1. Stelle sicher, dass Docker und Docker Compose auf deinem Rechner installiert sind.
+
+2. Entpacke das Release-Archiv:
+   unzip release-bundle.zip
+
+3. Wechsle in das entpackte Verzeichnis „release“:
+   cd release
+
+4. Starte die Anwendung mit Docker Compose:
+   docker-compose up -d
+
+5. Warte einige Momente, bis die Dienste gestartet sind.
+
+6. Starte API Server
+   java -jar Library-System-API-<VERSION>.jar
+
+7. Greife auf die Anwendung zu unter:
+   http://localhost:8080
+
+8. Um die Anwendung zu stoppen, führe aus:
+   docker-compose down
