@@ -19,6 +19,8 @@ HOW TO RUN
 7. To stop the application, run:
    docker-compose down
 
+Note: Since this is intended as a demo, the database data will be reset each time the Docker container is stopped.
+
 ---
 
 ANLEITUNG ZUM STARTEN
@@ -41,3 +43,5 @@ ANLEITUNG ZUM STARTEN
 
 7. Um die Anwendung zu stoppen, führe aus:
    docker-compose down
+
+Hinweis: Da es sich hierbei um eine Demo handelt, wird die Datenbank bei jedem Stoppen des Docker-Containers zurückgesetzt, da die Daten nicht dauerhaft gespeichert werden.
