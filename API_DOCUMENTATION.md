@@ -66,7 +66,7 @@ Base Path: `/genres`
 
 | Method | Endpoint            | Description                     | Access  |
 | :--- | :------------------ | :------------------------------ | :------ |
-| POST   | `/register`         | Register a new user             | Visitor |
+| POST   | `/register`         | Register a new user             | Visitor / Admin to register another admin |
 | POST   | `/login`            | Login as a user                 | Visitor |
 | GET    | `/users`            | Get all users (paginated)       | Admin   |
 | GET    | `/users/{id}`       | Get a specific user by ID       | Admin   |
