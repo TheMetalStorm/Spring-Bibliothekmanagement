@@ -12,6 +12,8 @@
       - pgdata:/var/lib/postgresql/data
 
   api-server:
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/bookdb
     image: openjdk:17-jdk-slim
     container_name: api-server
     depends_on:
