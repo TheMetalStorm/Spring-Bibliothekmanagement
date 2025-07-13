@@ -2,6 +2,9 @@
 
 This is a Spring Boot project for managing a library system. It allows users to manage books, authors, and genres.
 
+Note: This is a demo application. The database is configured to be non-persistent by design and only stores data while the database service is running.
+This behavior is intentional for demonstration purposes and can be easily changed in the configuration.
+
 ## Implemented Features
 
 - [x] Book management
@@ -26,6 +29,9 @@ This is a Spring Boot project for managing a library system. It allows users to 
 # Bibliothekssystem
 
 Dies ist ein Spring-Boot-Projekt zur Verwaltung eines Bibliothekssystems. Es ermöglicht die Verwaltung von Büchern, Autoren und Genres.
+
+Hinweis: Dies ist eine Demoanwendung. Die Datenbank ist absichtlich nicht persistent konfiguriert und speichert Daten nur solange der Datenbankdienst läuft.
+Dieses Verhalten ist bewusst so gewählt und kann leicht in der Konfiguration angepasst werden.
 
 ## Implementierte Funktionen
 
