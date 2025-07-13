@@ -1,0 +1,26 @@
+﻿services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: bookdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api-server:
+    image: openjdk:17-jdk-slim
+    container_name: api-server
+    depends_on:
+      - db
+    volumes:
+      - ./app.jar:/app/app.jar
+    working_dir: /app
+    command: [ "java", "-jar", "app.jar" ]
+    ports:
+      - "8080:8080"
+volumes:
+  pgdata:

@@ -27,8 +27,8 @@ jobs:
       - name: Copy docker-compose and JAR to output folder
         run: |
           mkdir release
-          cp docker-compose.yml release/
-          cp target/*.jar release/
+          cp docker-compose-RELEASE.yml release/docker-compose.yml
+          cp target/*.jar release/app.jar
           cp HOW_TO_RUN.txt release/
 
       - name: Archive release files
