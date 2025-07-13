@@ -2,7 +2,7 @@ name: Release Build
 
 on:
   release:
-    types: [published] # Triggers when a new GitHub Release is published
+    types: [published]
 
 permissions:
   contents: write
