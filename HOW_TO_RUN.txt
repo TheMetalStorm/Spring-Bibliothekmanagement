@@ -3,7 +3,7 @@ HOW TO RUN
 1. Ensure you have Docker and Docker Compose installed on your machine.
 
 2. Unzip the release bundle:
-   unzip release-bundle.zip
+   unzip release-bundle.zip -d release
 
 3. Navigate to the extracted 'release' directory:
    cd release
@@ -28,7 +28,7 @@ ANLEITUNG ZUM STARTEN
 1. Stelle sicher, dass Docker und Docker Compose auf deinem Rechner installiert sind.
 
 2. Entpacke das Release-Archiv:
-   unzip release-bundle.zip
+   unzip release-bundle.zip -d release
 
 3. Wechsle in das entpackte Verzeichnis „release“:
    cd release
