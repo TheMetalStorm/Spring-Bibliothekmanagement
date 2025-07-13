@@ -7,7 +7,8 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//TODO: return Response Entity when appropriate
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 @RestController
 public class LoanController {
     private final LoanService loanService;
@@ -24,13 +25,13 @@ public class LoanController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/loan/{bookId}")
-    public LoanDTO loanBook(@PathVariable int bookId, @RequestHeader(name="Authorization") String token) {
-        return loanService.addLoan(bookId, token);
+    public ResponseEntity<LoanDTO> loanBook(@PathVariable int bookId, @RequestHeader(name="Authorization") String token) {
+        return new ResponseEntity<>(loanService.addLoan(bookId, token), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/return/{loanId}")
-    public LoanDTO returnBook(@PathVariable int loanId, @RequestHeader(name="Authorization") String token) {
-        return loanService.removeLoan(loanId, token);
+    public ResponseEntity<LoanDTO> returnBook(@PathVariable int loanId, @RequestHeader(name="Authorization") String token) {
+        return new ResponseEntity<>(loanService.removeLoan(loanId, token), HttpStatus.OK);
     }
 }

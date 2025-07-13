@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
 
 @Service
 public class MyUserService implements UserDetailsService {
@@ -65,6 +65,14 @@ public class MyUserService implements UserDetailsService {
         }
     }
 
+    public User updateUser(int id, User userDetails) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(encoder.encode(userDetails.getPassword()));
+        user.setRole(userDetails.getRole());
+        return userRepository.save(user);
+    }
+
     public void deletAll() {
         userRepository.deleteAll();
     }
@@ -90,8 +98,7 @@ public class MyUserService implements UserDetailsService {
     }
 
     public User getUserById(int id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "User not found with id: " + id
         ));
     }

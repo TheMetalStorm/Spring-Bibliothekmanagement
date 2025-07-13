@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
+import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,13 +48,13 @@ public class LoanService {
         List<Loan> loansByUserId = loanRepository.findLoansByUserId(userId);
         boolean alreadyLoaned = loansByUserId.stream().filter(loan -> loan.getStatus() == LoanStatus.LOANED).anyMatch(loan -> Objects.equals(loan.getBookId(), bookId));
         if (alreadyLoaned) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already has a copy of this book");
+            throw new ResourceNotFoundException("User already has a copy of this book");
         }
 
         Book bookById = bookService.getWholeBookById(bookId);
 
         if (bookById.getAvailableCopies() <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No copies of Book " + bookById.getName() + " available");
+            throw new ResourceNotFoundException("No copies of Book " + bookById.getName() + " available");
         }
 
         Loan saved = loanRepository.save(new Loan(bookId, userId, LoanStatus.LOANED));
@@ -74,14 +74,14 @@ public class LoanService {
 
 
         Loan loan = loanRepository.findById(loanId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Loan does not exist in our system"));
+                .orElseThrow(() -> new ResourceNotFoundException("Loan does not exist in our system"));
 
         if (loan.getStatus() == LoanStatus.RETURNED) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Loan has already been returned");
+            throw new ResourceNotFoundException("Loan has already been returned");
         }
 
         if (loan.getUserId() != userId) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to delete this loan");
+            throw new ResourceNotFoundException("You are not allowed to delete this loan");
         }
         loan.setStatus(LoanStatus.RETURNED);
         loan.setReturned(LocalDateTime.now());

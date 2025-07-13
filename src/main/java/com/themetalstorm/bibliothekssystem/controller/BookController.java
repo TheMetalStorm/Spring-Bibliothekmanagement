@@ -7,7 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//TODO: return Response Entity when appropriate
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/books")
@@ -20,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping("")
-    Page<BookDTO> findBySearch(@RequestParam(defaultValue = "") String name,
+    ResponseEntity<Page<BookDTO>> findBySearch(@RequestParam(defaultValue = "") String name,
                                @RequestParam(required = false) Integer genreId,
                                @RequestParam(required = false) Integer authorId,
                                @RequestParam(required = false) Integer page,
@@ -29,26 +30,33 @@ public class BookController {
                                @RequestParam(defaultValue = "ASC") String sortDirection) {
 
 
-        return bookService.getBookBySearch(name, genreId, authorId, page, size, sortField, sortDirection);
+        return new ResponseEntity<>(bookService.getBookBySearch(name, genreId, authorId, page, size, sortField, sortDirection), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    BookDTO findById(@PathVariable int id) {
-        return bookService.getBookById(id);
+    ResponseEntity<BookDTO> findById(@PathVariable int id) {
+        return new ResponseEntity<>(bookService.getBookById(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     @ResponseBody
-    BookDTO addBook(@RequestBody BookDTO book) {
-        return bookService.addBook(book);
+    ResponseEntity<BookDTO> addBook(@RequestBody BookDTO book) {
+        return new ResponseEntity<>(bookService.addBook(book), HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<BookDTO> updateBook(@PathVariable int id, @RequestBody BookDTO bookDTO) {
+        return ResponseEntity.ok(bookService.updateBook(id, bookDTO));
     }
 
     //TODO: PUT
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    void deleteBook(@PathVariable int id) {
+    ResponseEntity<Void> deleteBook(@PathVariable int id) {
         bookService.deleteBookById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
