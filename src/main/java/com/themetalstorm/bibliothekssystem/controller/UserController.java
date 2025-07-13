@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-//TODO: return Response Entity when appropriate
+import org.springframework.http.ResponseEntity;
 
 @RestController
 public class UserController {
@@ -26,21 +26,21 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
-    public Page<User> getAllUsers(@RequestParam(required = false) Integer page,
+    public ResponseEntity<Page<User>> getAllUsers(@RequestParam(required = false) Integer page,
                                   @RequestParam(required = false) Integer size,
                                   @RequestParam(defaultValue = "username") String sortField,
                                   @RequestParam(defaultValue = "ASC") String sortDirection){
-        return userService.getAllUsers(page, size, sortField, sortDirection);
+        return new ResponseEntity<>(userService.getAllUsers(page, size, sortField, sortDirection), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable int id){
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable int id){
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user)
+    public ResponseEntity<User> registerUser(@RequestBody User user)
     {
         if(user.getRole().equals(Role.ROLE_ADMIN)) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -49,26 +49,32 @@ public class UserController {
                 .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
 
             if(senderIsAdmin){
-                return userService.register(user);
+                return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
             }
             else throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         else{
-            return userService.register(user);
+            return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
         }
     }
 
 
-    @PostMapping("/login")
-    public String login(@RequestBody User user){
-        return userService.verify(user);
+        @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user){
+        return new ResponseEntity<>(userService.verify(user), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User userDetails) {
+        return new ResponseEntity<>(userService.updateUser(id, userDetails), HttpStatus.OK);
     }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/deleteUser/{username}")
-    public String deleteUser(@PathVariable String username){
-        return userService.deleteByName(username);
+    public ResponseEntity<String> deleteUser(@PathVariable String username){
+        return new ResponseEntity<>(userService.deleteByName(username), HttpStatus.OK);
     }
 
 }

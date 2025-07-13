@@ -7,7 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//TODO: return Response Entity when appropriate
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/genres")
@@ -21,31 +22,39 @@ public class GenreController {
     }
 
     @GetMapping("")
-    Page<GenreDTO> getAllGenres(@RequestParam(required = false) Integer page,
+    ResponseEntity<Page<GenreDTO>> getAllGenres(@RequestParam(required = false) Integer page,
                                 @RequestParam(required = false) Integer size,
                                 @RequestParam(defaultValue = "name") String sortField,
                                 @RequestParam(defaultValue = "ASC") String sortDirection) {
-        return genreService.getAllGenres(page, size, sortField, sortDirection);
+        return new ResponseEntity<>(genreService.getAllGenres(page, size, sortField, sortDirection), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    GenreDTO findById(@PathVariable int id) {
-        return genreService.getGenreById(id);
+    ResponseEntity<GenreDTO> findById(@PathVariable int id) {
+        return new ResponseEntity<>(genreService.getGenreById(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     @ResponseBody
-    void addGenre(@RequestBody GenreDTO genre) {
+    ResponseEntity<Void> addGenre(@RequestBody GenreDTO genre) {
         genreService.addGenre(genre);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<GenreDTO> updateGenre(@PathVariable int id, @RequestBody GenreDTO genreDTO) {
+        return ResponseEntity.ok(genreService.updateGenre(id, genreDTO));
     }
 
     //TODO: PUT
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    void deleteGenreById(@PathVariable int id) {
+    ResponseEntity<Void> deleteGenreById(@PathVariable int id) {
         genreService.deleteGenreById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

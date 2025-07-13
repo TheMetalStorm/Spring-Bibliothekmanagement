@@ -1,6 +1,7 @@
 package com.themetalstorm.bibliothekssystem.service;
 
 import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
+import com.themetalstorm.bibliothekssystem.exceptions.ResourceAlreadyExistsException;
 import com.themetalstorm.bibliothekssystem.model.Book;
 import com.themetalstorm.bibliothekssystem.model.Genre;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
@@ -11,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,23 +21,15 @@ import java.util.List;
 public class GenreService {
 
     private final GenreRepository genreRepository;
-    private final BookRepository bookRepository;
 
-    public GenreService(GenreRepository genreRepository, BookRepository bookRepository) {
+    public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
-        this.bookRepository = bookRepository;
-    }
-
-    public void saveAllGenres(Collection<GenreDTO> genres) {
-        List<Genre> list = genres.stream().filter(genreDTO -> !genreRepository.existsByName(genreDTO.name())).map(Genre::new).toList();
-        genreRepository.saveAll(list);
-    }
-
-    public void deleteAll() {
-        genreRepository.deleteAll();
     }
 
     public void addGenre(GenreDTO genre) {
+        if (genreRepository.existsByName(genre.name())) {
+            throw new ResourceAlreadyExistsException("Genre with name " + genre.name() + " already exists");
+        }
         genreRepository.save(new Genre(genre));
     }
 
@@ -56,15 +49,20 @@ public class GenreService {
     }
 
     public GenreDTO getGenreById(int id) {
-        return genreRepository.findById(id).map(GenreDTO::new).orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Author not found with id: " + id
+        return genreRepository.findById(id).map(GenreDTO::new).orElseThrow(() -> new ResourceNotFoundException(
+                "Genre not found with id: " + id
         ));
     }
 
+    public GenreDTO updateGenre(int id, GenreDTO genreDTO) {
+        Genre genre = genreRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Genre not found with id: " + id));
+        genre.setName(genreDTO.name());
+        genre.setDescription(genreDTO.description());
+        return new GenreDTO(genreRepository.save(genre));
+    }
+
     public void deleteGenreById(int id) {
-        Genre genre = genreRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
+        Genre genre = genreRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Genre not found with id: " + id
         ));
         genreRepository.deleteById(id);
