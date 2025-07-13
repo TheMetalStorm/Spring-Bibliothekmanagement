@@ -29,6 +29,7 @@ jobs:
           mkdir release
           cp docker-compose.yml release/
           cp target/*.jar release/
+          cp HOW_TO_RUN.txt release/
 
       - name: Archive release files
         run: |
