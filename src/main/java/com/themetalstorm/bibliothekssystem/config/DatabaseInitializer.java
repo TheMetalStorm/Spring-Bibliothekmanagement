@@ -32,7 +32,7 @@ public class DatabaseInitializer {
             userService.deletAll();
 
             getSampleBooks().forEach(bookService::addBook);
-            userService.register(new User("simon", "simon", Role.ROLE_ADMIN));
+            userService.register(new User("admin", "admin", Role.ROLE_ADMIN));
             userService.register(new User("user1", "user1", Role.ROLE_USER));
         };
     }
