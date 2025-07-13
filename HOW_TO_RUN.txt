@@ -8,18 +8,15 @@ HOW TO RUN
 3. Navigate to the extracted 'release' directory:
    cd release
 
-4. Start the application using Docker Compose:
+4. Start the database and application using Docker Compose:
    docker-compose up -d
 
 5. Wait a few moments for the services to start.
 
-6. Start API Server
-   java -jar Library-System-API-<VERSION>.jar
-
-7. Access the application at:
+6. Access the application at:
    http://localhost:8080
 
-8. To stop the application, run:
+7. To stop the application, run:
    docker-compose down
 
 ---
@@ -34,16 +31,13 @@ ANLEITUNG ZUM STARTEN
 3. Wechsle in das entpackte Verzeichnis „release“:
    cd release
 
-4. Starte die Anwendung mit Docker Compose:
+4. Starte die Datenbank und die Anwendung mit Docker Compose:
    docker-compose up -d
 
 5. Warte einige Momente, bis die Dienste gestartet sind.
 
-6. Starte API Server
-   java -jar Library-System-API-<VERSION>.jar
-
-7. Greife auf die Anwendung zu unter:
+6. Greife auf die Anwendung zu unter:
    http://localhost:8080
 
-8. Um die Anwendung zu stoppen, führe aus:
+7. Um die Anwendung zu stoppen, führe aus:
    docker-compose down
