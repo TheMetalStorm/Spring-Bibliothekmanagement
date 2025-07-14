@@ -1,6 +1,7 @@
 package com.themetalstorm.bibliothekssystem.model;
 
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
+import com.themetalstorm.bibliothekssystem.dto.BookPostDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -83,6 +84,16 @@ public class Book {
         this.totalCopies = bookDTO.totalCopies();
     }
 
+
+    public Book(BookPostDTO bookDTO) {
+        this.name = bookDTO.name();
+        this.isbn = bookDTO.isbn();
+        this.publisher = bookDTO.publisher();
+        this.genres = new HashSet<>();
+        this.authors =  new HashSet<>();
+        this.availableCopies = bookDTO.availableCopies();
+        this.totalCopies = bookDTO.totalCopies();
+    }
 
     @Override
     public boolean equals(Object o) {
