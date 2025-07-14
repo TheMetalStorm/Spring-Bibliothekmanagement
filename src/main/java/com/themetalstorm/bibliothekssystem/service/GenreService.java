@@ -26,11 +26,11 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public void addGenre(GenreDTO genre) {
+    public GenreDTO addGenre(GenreDTO genre) {
         if (genreRepository.existsByName(genre.name())) {
             throw new ResourceAlreadyExistsException("Genre with name " + genre.name() + " already exists");
         }
-        genreRepository.save(new Genre(genre));
+        return new GenreDTO(genreRepository.save(new Genre(genre)));
     }
 
     public Page<GenreDTO> getAllGenres(Integer page, Integer size, String sortField, String sortDirection) {
