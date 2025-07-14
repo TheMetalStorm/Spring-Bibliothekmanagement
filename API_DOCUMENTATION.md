@@ -120,19 +120,11 @@ Base Path: `/books`
 
 ```json
 {
-    "name": "The Lord of the Rings",
+    "name": "The Lord he Rings",
     "isbn": "978-3-16-148410-0",
     "publisher": "Klett-Cotta",
-    "genres": [
-        {
-            "id": 1
-        }
-    ],
-    "authors": [
-        {
-            "id": 1
-        }
-    ],
+    "genreIds": [1, 6],
+    "authorIds": [1, 2],
     "availableCopies": 10,
     "totalCopies": 10
 }
@@ -142,20 +134,12 @@ Base Path: `/books`
 
 ```json
 {
-    "name": "The Hobbit",
+    "name": "The Lord he Rings",
     "isbn": "978-3-16-148410-0",
     "publisher": "Klett-Cotta",
-    "genres": [
-        {
-            "id": 1
-        }
-    ],
-    "authors": [
-        {
-            "id": 1
-        }
-    ],
-    "availableCopies": 5,
+    "genreIds": [1, 6],
+    "authorIds": [1, 2],
+    "availableCopies": 10,
     "totalCopies": 10
 }
 ```

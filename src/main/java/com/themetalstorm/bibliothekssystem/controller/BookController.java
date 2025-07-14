@@ -1,5 +1,6 @@
 package com.themetalstorm.bibliothekssystem.controller;
 
+import com.themetalstorm.bibliothekssystem.dto.BookPostDTO;
 import com.themetalstorm.bibliothekssystem.service.BookService;
 import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +42,13 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     @ResponseBody
-    ResponseEntity<BookDTO> addBook(@RequestBody BookDTO book) {
-        return new ResponseEntity<>(bookService.addBook(book), HttpStatus.CREATED);
+    ResponseEntity<BookDTO> addBook(@RequestBody BookPostDTO book) {
+        return new ResponseEntity<>(bookService.addBookPostDTO(book), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable int id, @RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> updateBook(@PathVariable int id, @RequestBody BookPostDTO bookDTO) {
         return ResponseEntity.ok(bookService.updateBook(id, bookDTO));
     }
 

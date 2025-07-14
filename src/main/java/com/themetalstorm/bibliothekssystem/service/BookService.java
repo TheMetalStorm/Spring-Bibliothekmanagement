@@ -1,6 +1,7 @@
 package com.themetalstorm.bibliothekssystem.service;
 
 import com.themetalstorm.bibliothekssystem.dto.AuthorDTO;
+import com.themetalstorm.bibliothekssystem.dto.BookPostDTO;
 import com.themetalstorm.bibliothekssystem.dto.GenreDTO;
 import com.themetalstorm.bibliothekssystem.exceptions.ResourceAlreadyExistsException;
 import com.themetalstorm.bibliothekssystem.model.Author;
@@ -79,7 +80,28 @@ public class BookService {
         return new BookDTO(bookRepository.save(book));
     }
 
-    public BookDTO updateBook(int id, BookDTO bookDTO) {
+    public BookDTO addBookPostDTO(BookPostDTO bookDTO) {
+
+        boolean isbnExists = bookRepository.existsByIsbn(bookDTO.isbn());
+        if(isbnExists){
+            throw new ResourceAlreadyExistsException("Books with ISBN " + bookDTO.isbn() + " already exists");
+        }
+
+        Book book = new Book(bookDTO);
+        for (Integer authorId : bookDTO.authorIds()) {
+            Author existingAuthor = authorRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("Genre not found with id: " + authorId));
+            book.getAuthors().add(existingAuthor);
+        }
+
+        for (Integer genreId : bookDTO.genreIds()) {
+            Genre existingGenre = genreRepository.findById(genreId).orElseThrow(() -> new ResourceNotFoundException("Genre not found with id: " + genreId));
+            book.getGenres().add(existingGenre);
+        }
+
+        return new BookDTO(bookRepository.save(book));
+    }
+
+    public BookDTO updateBook(int id, BookPostDTO bookDTO) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
         book.setName(bookDTO.name());
         book.setIsbn(bookDTO.isbn());
@@ -87,17 +109,15 @@ public class BookService {
         book.setTotalCopies(bookDTO.totalCopies());
 
         book.getAuthors().clear();
-        for (AuthorDTO authorDTO : bookDTO.authors()) {
-            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.firstName(), authorDTO.lastName())
-                    .orElseGet(() -> authorRepository.save(new Author(authorDTO)));
-            book.getAuthors().add(author);
+        for (Integer authorId : bookDTO.authorIds()) {
+            Author existingAuthor = authorRepository.findById(authorId).orElseThrow(() -> new ResourceNotFoundException("Genre not found with id: " + authorId));
+            book.getAuthors().add(existingAuthor);
         }
 
         book.getGenres().clear();
-        for (GenreDTO genreDTO : bookDTO.genres()) {
-            Genre genre = genreRepository.findByName(genreDTO.name())
-                    .orElseGet(() -> genreRepository.save(new Genre(genreDTO)));
-            book.getGenres().add(genre);
+        for (Integer genreId : bookDTO.genreIds()) {
+            Genre existingGenre = genreRepository.findById(genreId).orElseThrow(() -> new ResourceNotFoundException("Genre not found with id: " + genreId));
+            book.getGenres().add(existingGenre);
         }
 
         return new BookDTO(bookRepository.save(book));
