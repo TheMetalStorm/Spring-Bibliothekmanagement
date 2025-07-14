@@ -37,9 +37,8 @@ public class GenreController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     @ResponseBody
-    ResponseEntity<Void> addGenre(@RequestBody GenreDTO genre) {
-        genreService.addGenre(genre);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    ResponseEntity<GenreDTO> addGenre(@RequestBody GenreDTO genre) {
+        return new ResponseEntity<>(genreService.addGenre(genre), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

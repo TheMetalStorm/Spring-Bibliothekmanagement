@@ -52,8 +52,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.updateBook(id, bookDTO));
     }
 
-    //TODO: PUT
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteBook(@PathVariable int id) {
