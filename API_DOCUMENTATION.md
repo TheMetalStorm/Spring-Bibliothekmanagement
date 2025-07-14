@@ -26,16 +26,37 @@ Two User Accounts are registered automatically at the start of the application:
 | :--- | :------------------ | :------------------------------ | :------ |
 | POST   | `/register`         | Register a new user             | Visitor / Admin to register another admin |
 | POST   | `/login`            | Login as a user                 | Visitor |
-| GET    | `/users`            | Get all users (paginated)       | Admin   |
+| GET    | `/users`            | Get all users.       | Admin   |
 | GET    | `/users/{id}`       | Get a specific user by ID       | Admin   |
 | PUT    | `/users/{id}`       | Update a user's details         | Admin   |
 | DELETE | `/deleteUser/{username}` | Delete a user by username       | Admin   |
 
-**GET /login**
+### GET /users
+Returns a paginated and sorted list of all users.
 
-Returns users JWT Token. Required for requests that need User/Admin authorization.
+**Query Parameters:**
+*   `page` (optional, integer): The page number to retrieve.
+*   `size` (optional, integer): The number of users per page.
+*   `sortField` (optional, string, default: `username`): The field to sort by.
+*   `sortDirection` (optional, string, default: `ASC`): The sort direction (`ASC` or `DESC`).
 
-**POST /register**
+**Note:** Pagination is only enabled when both `page` and `size` parameters are provided.
+
+### GET /users/{id}
+Retrieves a specific user by their ID.
+
+**Path Parameters:**
+*   `id` (required, integer): The ID of the user to retrieve.
+
+### DELETE /deleteUser/{username}
+Deletes a user by their username.
+
+**Path Parameters:**
+*   `username` (required, string): The username of the user to delete.
+
+### POST /register
+
+**Body:**
 
 ```json
 {
@@ -45,8 +66,10 @@ Returns users JWT Token. Required for requests that need User/Admin authorizatio
 }
 ```
 
-**POST /login**
+### POST /login
+Returns users JWT Token. Required for requests that need User/Admin authorization.
 
+**Body:**
 ```json
 {
     "username": "testuser",
@@ -54,8 +77,11 @@ Returns users JWT Token. Required for requests that need User/Admin authorizatio
 }
 ```
 
-**PUT /users/{id}**
+### PUT /users/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the user to update.
 
+**Body:**
 ```json
 {
     "username": "newusername",
@@ -72,14 +98,31 @@ Base Path: `/authors`
 
 | Method | Endpoint      | Description                     | Access  |
 | :--- | :------------ | :------------------------------ | :------ |
-| GET    | `/`           | Get all authors (paginated)     | Visitor |
+| GET    | `/`           | Get all authors.     | Visitor |
 | GET    | `/{id}`       | Get a specific author by ID     | Visitor |
 | POST   | `/`           | Add a new author                | Admin   |
 | PUT    | `/{id}`       | Update an existing author       | Admin   |
 | DELETE | `/{id}`       | Delete an author                | Admin   |
 
-**POST /authors**
+### GET /authors
+Returns a paginated and sorted list of all authors.
 
+**Query Parameters:**
+*   `page` (optional, integer): The page number to retrieve.
+*   `size` (optional, integer): The number of authors per page.
+*   `sortField` (optional, string, default: `lastName`): The field to sort by.
+*   `sortDirection` (optional, string, default: `ASC`): The sort direction (`ASC` or `DESC`).
+
+**Note:** Pagination is only enabled when both `page` and `size` parameters are provided.
+
+### GET /authors/{id}
+Retrieves a specific author by their ID.
+
+**Path Parameters:**
+*   `id` (required, integer): The ID of the author to retrieve.
+
+### POST /authors
+**Body:**
 ```json
 {
     "firstName": "Max",
@@ -90,8 +133,10 @@ Base Path: `/authors`
 }
 ```
 
-**PUT /authors/{id}**
-
+### PUT /authors/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the author to update.
+**Body:**
 ```json
 {
     "firstName": "Maximilian",
@@ -102,6 +147,10 @@ Base Path: `/authors`
 }
 ```
 
+### DELETE /authors/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the author to delete.
+
 ---
 
 ## Books API
@@ -110,14 +159,34 @@ Base Path: `/books`
 
 | Method | Endpoint      | Description                     | Access  |
 | :--- | :------------ | :------------------------------ | :------ |
-| GET    | `/`           | Search for books (paginated)    | Visitor |
+| GET    | `/`           | Search for books.    | Visitor |
 | GET    | `/{id}`       | Get a specific book by ID       | Visitor |
 | POST   | `/`           | Add a new book                  | Admin   |
 | PUT    | `/{id}`       | Update an existing book         | Admin   |
 | DELETE | `/{id}`       | Delete a book                   | Admin   |
 
-**POST /books**
+### GET /books
+Returns a paginated and sorted list of books based on search criteria.
 
+**Query Parameters:**
+*   `name` (optional, string): Filter by book name (case-insensitive search).
+*   `genreId` (optional, integer): Filter by genre ID.
+*   `authorId` (optional, integer): Filter by author ID.
+*   `page` (optional, integer): The page number to retrieve.
+*   `size` (optional, integer): The number of books per page.
+*   `sortField` (optional, string, default: `name`): The field to sort by.
+*   `sortDirection` (optional, string, default: `ASC`): The sort direction (`ASC` or `DESC`).
+
+**Note:** Pagination is only enabled when both `page` and `size` parameters are provided.
+
+### GET /books/{id}
+Retrieves a specific book by its ID.
+
+**Path Parameters:**
+*   `id` (required, integer): The ID of the book to retrieve.
+
+### POST /books
+**Body:**
 ```json
 {
     "name": "The Lord of the Rings",
@@ -130,8 +199,10 @@ Base Path: `/books`
 }
 ```
 
-**PUT /books/{id}**
-
+### PUT /books/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the book to update.
+**Body:**
 ```json
 {
     "name": "The Lord of the Rings",
@@ -143,6 +214,10 @@ Base Path: `/books`
     "totalCopies": 10
 }
 ```
+
+### DELETE /books/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the book to delete.
 
 ---
 
@@ -152,14 +227,31 @@ Base Path: `/genres`
 
 | Method | Endpoint      | Description                     | Access  |
 | :--- | :------------ | :------------------------------ | :------ |
-| GET    | `/`           | Get all genres (paginated)      | Visitor |
+| GET    | `/`           | Get all genres.      | Visitor |
 | GET    | `/{id}`       | Get a specific genre by ID      | Visitor |
 | POST   | `/`           | Add a new genre                 | Admin   |
 | PUT    | `/{id}`       | Update an existing genre        | Admin   |
 | DELETE | `/{id}`       | Delete a genre                  | Admin   |
 
-**POST /genres**
+### GET /genres
+Returns a paginated and sorted list of all genres.
 
+**Query Parameters:**
+*   `page` (optional, integer): The page number to retrieve.
+*   `size` (optional, integer): The number of genres per page.
+*   `sortField` (optional, string, default: `name`): The field to sort by.
+*   `sortDirection` (optional, string, default: `ASC`): The sort direction (`ASC` or `DESC`).
+
+**Note:** Pagination is only enabled when both `page` and `size` parameters are provided.
+
+### GET /genres/{id}
+Retrieves a specific genre by its ID.
+
+**Path Parameters:**
+*   `id` (required, integer): The ID of the genre to retrieve.
+
+### POST /genres
+**Body:**
 ```json
 {
     "name": "Fantasy",
@@ -167,14 +259,20 @@ Base Path: `/genres`
 }
 ```
 
-**PUT /genres/{id}**
-
+### PUT /genres/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the genre to update.
+**Body:**
 ```json
 {
     "name": "Science Fiction",
     "description": "Science fiction is a genre of speculative fiction that typically deals with imaginative and futuristic concepts such as advanced science and technology, space exploration, time travel, parallel universes, and extraterrestrial life."
 }
 ```
+
+### DELETE /genres/{id}
+**Path Parameters:**
+*   `id` (required, integer): The ID of the genre to delete.
 
 ---
 
@@ -184,5 +282,17 @@ Base Path: `/genres`
 | :--- | :--------------- | :------------------------------ | :------ |
 | POST   | `/loan/{bookId}` | Loan a book                     | User    |
 | POST   | `/return/{loanId}`| Return a book                   | User    |
+
+### POST /loan/{bookId}
+Loans a book to the authenticated user.
+
+**Path Parameters:**
+*   `bookId` (required, integer): The ID of the book to loan.
+
+### POST /return/{loanId}
+Returns a loaned book.
+
+**Path Parameters:**
+*   `loanId` (required, integer): The ID of the loan to return.
 
 

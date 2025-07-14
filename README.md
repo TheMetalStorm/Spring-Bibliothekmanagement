@@ -21,7 +21,7 @@ This behavior is intentional for demonstration purposes and can be easily change
 
 ## To-Dos
 
-- [ ] Implement a few missing API endpoints (TODOs in Code)
+- [ ] Implement a few missing API endpoints for loans (TODOs in Code)
 - [ ] Comprehensive testing
 
 ---
@@ -48,5 +48,5 @@ Dieses Verhalten ist bewusst so gewählt und kann mit ein paar kleinen Änderung
 
 ## To-Dos
 
-- [ ] Ein paar fehlende API Endpunkte implementieren (siehe TODOs im Code)
+- [ ] Ein paar fehlende API Endpunkte für das Ausleihen implementieren (siehe TODOs im Code)
 - [ ] Umfassende Tests
