@@ -120,7 +120,7 @@ Base Path: `/books`
 
 ```json
 {
-    "name": "The Lord he Rings",
+    "name": "The Lord of the Rings",
     "isbn": "978-3-16-148410-0",
     "publisher": "Klett-Cotta",
     "genreIds": [1, 6],
@@ -134,7 +134,7 @@ Base Path: `/books`
 
 ```json
 {
-    "name": "The Lord he Rings",
+    "name": "The Lord of the Rings",
     "isbn": "978-3-16-148410-0",
     "publisher": "Klett-Cotta",
     "genreIds": [1, 6],
