@@ -77,8 +77,6 @@ public class AuthorService {
         return new AuthorDTO(authorRepository.save(author));
     }
 
-    //TODO: PUT
-
     public void deleteById(int id) {
         Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceAlreadyExistsException("Author not found with id: " + id));
         authorRepository.delete(author);

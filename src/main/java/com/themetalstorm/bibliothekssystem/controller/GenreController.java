@@ -47,8 +47,6 @@ public class GenreController {
         return ResponseEntity.ok(genreService.updateGenre(id, genreDTO));
     }
 
-    //TODO: PUT
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteGenreById(@PathVariable int id) {

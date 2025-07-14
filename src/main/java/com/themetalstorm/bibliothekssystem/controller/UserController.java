@@ -39,6 +39,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
+    //TODO: move logic to service
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user)
     {
