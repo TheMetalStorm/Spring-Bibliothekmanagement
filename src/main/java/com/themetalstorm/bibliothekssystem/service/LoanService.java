@@ -1,16 +1,14 @@
 package com.themetalstorm.bibliothekssystem.service;
 
-import com.themetalstorm.bibliothekssystem.dto.BookDTO;
 import com.themetalstorm.bibliothekssystem.dto.LoanDTO;
-import com.themetalstorm.bibliothekssystem.model.Book;
-import com.themetalstorm.bibliothekssystem.model.Loan;
-import com.themetalstorm.bibliothekssystem.model.LoanStatus;
-import com.themetalstorm.bibliothekssystem.model.User;
+import com.themetalstorm.bibliothekssystem.model.*;
 import com.themetalstorm.bibliothekssystem.repository.BookRepository;
 import com.themetalstorm.bibliothekssystem.repository.LoanRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
@@ -18,7 +16,6 @@ import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class LoanService {
@@ -92,5 +89,51 @@ public class LoanService {
         bookRepository.saveAndFlush(bookById);
         Loan toReturn = loanRepository.saveAndFlush(loan);
         return new LoanDTO(toReturn);
+    }
+
+    public Page<LoanDTO> getUserLoans(String token, Integer page, Integer size, String sortField, String sortDirection) {
+        String jwtToken = token.substring(7);
+
+        String username = jwtService.extractUserName(jwtToken);
+        User user = myUserService.loadWholeUserByUsername(username);
+        int userId = user.getId();
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
+
+        Page<Loan> all;
+        if (page == null || size == null) {
+            all = loanRepository.findLoansByUserId(userId, Pageable.unpaged(sort));
+        } else {
+            Pageable pageable = PageRequest.of(page, size, sort);
+            all = loanRepository.findLoansByUserId(userId, pageable);
+
+        }
+
+        return all.map(LoanDTO::new);
+    }
+
+    public Page<LoanDTO> getAllLoans(String token, Integer page, Integer size, String sortField, String sortDirection, Integer userId, Integer bookId, LoanStatus loanStatus) {
+
+        String jwtToken = token.substring(7);
+
+        String username = jwtService.extractUserName(jwtToken);
+        User user = myUserService.loadWholeUserByUsername(username);
+        if(user.getRole() != Role.ROLE_ADMIN){
+            throw  new AccessDeniedException("Only Admin Users are allowed to view all loans");
+        }
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
+        Page<Loan> all;
+
+        if (page == null || size == null) {
+
+            all = loanRepository.findBySearch(page, size, sortField, sortDirection, userId,bookId, loanStatus, Pageable.unpaged(sort));
+        } else {
+            Pageable pageable = PageRequest.of(page, size, sort);
+
+            all = loanRepository.findBySearch(page, size, sortField, sortDirection, userId, bookId, loanStatus, pageable);
+        }
+
+        return all.map(LoanDTO::new);
     }
 }

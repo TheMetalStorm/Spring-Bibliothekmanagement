@@ -280,8 +280,35 @@ Retrieves a specific genre by its ID.
 
 | Method | Endpoint         | Description                     | Access  |
 | :--- | :--------------- | :------------------------------ | :------ |
+| GET    | `/loans`         | Get all loans for the user      | User    |
+| GET    | `/admin/loans`   | Get all loans                   | Admin   |
 | POST   | `/loan/{bookId}` | Loan a book                     | User    |
 | POST   | `/return/{loanId}`| Return a book                   | User    |
+
+### GET /loans
+Returns a paginated and sorted list of all loans for the authenticated user.
+
+**Query Parameters:**
+*   `page` (optional, integer): The page number to retrieve.
+*   `size` (optional, integer): The number of loans per page.
+*   `sortField` (optional, string, default: `id`): The field to sort by.
+*   `sortDirection` (optional, string, default: `ASC`): The sort direction (`ASC` or `DESC`).
+
+**Note:** Pagination is only enabled when both `page` and `size` parameters are provided.
+
+### GET /admin/loans
+Returns a paginated and sorted list of all loans.
+
+**Query Parameters:**
+*   `loanStatus` (optional, string): Filter by loan status (`ACTIVE`, `RETURNED`).
+*   `userId` (optional, integer): Filter by user ID.
+*   `bookId` (optional, integer): Filter by book ID.
+*   `page` (optional, integer): The page number to retrieve.
+*   `size` (optional, integer): The number of loans per page.
+*   `sortField` (optional, string, default: `id`): The field to sort by.
+*   `sortDirection` (optional, string, default: `ASC`): The sort direction (`ASC` or `DESC`).
+
+**Note:** Pagination is only enabled when both `page` and `size` parameters are provided.
 
 ### POST /loan/{bookId}
 Loans a book to the authenticated user.

@@ -137,7 +137,6 @@ public class BookService {
 
         Page<Book> all;
         if (page == null || size == null ) {
-            System.out.println("\"NULL\" = " + "NULL");
             all =  bookRepository.findBySearch(search, genreId, authorId, Pageable.unpaged(sort));
         }
         else{
