@@ -44,6 +44,12 @@ public class LoanController {
 
 
     // TODO: Add loan (admin)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/admin/loans")
+    public ResponseEntity<LoanDTO> addLoan(@RequestBody LoanDTO loanDTO, @RequestHeader(name="Authorization") String token) {
+        return new ResponseEntity<>(loanService.addLoanAdmin(loanDTO), HttpStatus.CREATED);
+    }
+
     // TODO: Edit loan (admin)
     // TODO: Remove loan (admin)
 

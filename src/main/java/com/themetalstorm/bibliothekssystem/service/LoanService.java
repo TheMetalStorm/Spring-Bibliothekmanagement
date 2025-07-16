@@ -136,4 +136,8 @@ public class LoanService {
 
         return all.map(LoanDTO::new);
     }
+
+    public LoanDTO addLoanAdmin(LoanDTO loanDTO) {
+        return null;
+    }
 }
