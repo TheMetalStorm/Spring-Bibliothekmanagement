@@ -18,10 +18,8 @@ This behavior is intentional for demonstration purposes and can be easily change
 - [x] Uniform error handling and server responses
 - [x] API documentation ([API_DOCUMENTATION.md](API_DOCUMENTATION.md))
 
-
 ## To-Dos
 
-- [ ] Implement a few missing API endpoints for loans (TODOs in Code)
 - [ ] Comprehensive testing
 
 ---
@@ -48,5 +46,4 @@ Dieses Verhalten ist bewusst so gewählt und kann mit ein paar kleinen Änderung
 
 ## To-Dos
 
-- [ ] Ein paar fehlende API Endpunkte für das Ausleihen implementieren (siehe TODOs im Code)
 - [ ] Umfassende Tests
