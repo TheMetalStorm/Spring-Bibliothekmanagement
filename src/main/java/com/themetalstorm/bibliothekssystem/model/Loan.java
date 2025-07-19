@@ -40,4 +40,11 @@ public class Loan {
         this.userId = userId;
         this.status = status;
     }
+
+    public Loan(Integer bookId, Integer userId, LoanStatus loanStatus, LocalDateTime returned) {
+        this.bookId = bookId;
+        this.userId = userId;
+        this.status = loanStatus;
+        this.returned = returned;
+    }
 }

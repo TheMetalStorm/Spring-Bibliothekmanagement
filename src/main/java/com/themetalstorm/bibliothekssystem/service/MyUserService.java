@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MyUserService implements UserDetailsService {
@@ -65,6 +66,7 @@ public class MyUserService implements UserDetailsService {
         }
     }
 
+    @Transactional
     public User updateUser(int id, User userDetails) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
         user.setUsername(userDetails.getUsername());
@@ -77,6 +79,7 @@ public class MyUserService implements UserDetailsService {
         userRepository.deleteAll();
     }
 
+    @Transactional
     public String deleteByName(String username) {
         if(userRepository.existsByUsername(username)){
             userRepository.deleteByUsername(username);
@@ -103,5 +106,8 @@ public class MyUserService implements UserDetailsService {
         ));
     }
 
+    public boolean existsById(int id) {
+        return userRepository.existsById(id);
+    }
 
 }
