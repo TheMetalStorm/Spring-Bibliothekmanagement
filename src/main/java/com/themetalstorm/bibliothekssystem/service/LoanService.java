@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.themetalstorm.bibliothekssystem.exceptions.ResourceNotFoundException;
@@ -62,7 +61,7 @@ public class LoanService {
     }
 
     @Transactional
-    public LoanDTO removeLoan(Integer loanId, String token) {
+    public LoanDTO returnLoan(Integer loanId, String token) {
         String jwtToken = token.substring(7);
 
         String username = jwtService.extractUserName(jwtToken);
@@ -112,15 +111,7 @@ public class LoanService {
         return all.map(LoanDTO::new);
     }
 
-    public Page<LoanDTO> getAllLoans(String token, Integer page, Integer size, String sortField, String sortDirection, Integer userId, Integer bookId, LoanStatus loanStatus) {
-
-        String jwtToken = token.substring(7);
-
-        String username = jwtService.extractUserName(jwtToken);
-        User user = myUserService.loadWholeUserByUsername(username);
-        if(user.getRole() != Role.ROLE_ADMIN){
-            throw  new AccessDeniedException("Only Admin Users are allowed to view all loans");
-        }
+    public Page<LoanDTO> getAllLoans(Integer page, Integer size, String sortField, String sortDirection, Integer userId, Integer bookId, LoanStatus loanStatus) {
 
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
         Page<Loan> all;
@@ -137,7 +128,85 @@ public class LoanService {
         return all.map(LoanDTO::new);
     }
 
-    public LoanDTO addLoanAdmin(LoanDTO loanDTO) {
-        return null;
+    @Transactional
+    public LoanDTO addLoanAdmin(Integer userId, Integer bookId) {
+
+        if(!myUserService.existsById(userId) ) {
+            throw new ResourceNotFoundException("User does not exist");
+        }
+
+        List<Loan> loansByUserId = loanRepository.findLoansByUserId(userId);
+        boolean alreadyLoaned = loansByUserId.stream().filter(loan -> loan.getStatus() == LoanStatus.LOANED).anyMatch(loan -> Objects.equals(loan.getBookId(), bookId));
+        if (alreadyLoaned) {
+            throw new ResourceNotFoundException("User already has a copy of this book");
+        }
+
+        Book bookById = bookService.getWholeBookById(bookId);
+
+        if (bookById.getAvailableCopies() <= 0) {
+            throw new ResourceNotFoundException("No copies of Book " + bookById.getName() + " available");
+        }
+
+        Loan saved = loanRepository.save(new Loan(bookId, userId, LoanStatus.LOANED));
+        bookById.setAvailableCopies(bookById.getAvailableCopies() - 1);
+        bookRepository.saveAndFlush(bookById);
+
+        return new LoanDTO(saved);
+    }
+
+    // This is intended for adding historical loan records. As such it skips all checks and doesnt decrement
+    // number of available books
+    public LoanDTO addLoanAdminBypassChecks(LoanDTO loanDTO) {
+        Loan saved = loanRepository.save(new Loan(loanDTO.bookId(), loanDTO.userId(), loanDTO.loanStatus(), loanDTO.returned()));
+        return new LoanDTO(loanRepository.save(saved));
+    }
+
+    @Transactional
+    public LoanDTO editLoan(Integer loanId, LoanDTO loanDTO) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan does not exist in our system"));
+
+        loan.setBookId(loanDTO.bookId());
+        loan.setUserId(loanDTO.userId());
+        loan.setStatus(loanDTO.loanStatus());
+        loan.setReturned(loanDTO.returned());
+        return new LoanDTO(loanRepository.saveAndFlush(loan));
+    }
+
+    @Transactional
+    public LoanDTO returnLoanAdmin(Integer loanId) {
+
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan does not exist in our system"));
+
+        if (loan.getStatus() == LoanStatus.RETURNED) {
+            throw new ResourceNotFoundException("Loan has already been returned");
+        }
+
+        loan.setStatus(LoanStatus.RETURNED);
+        loan.setReturned(LocalDateTime.now());
+
+        Book bookById = bookService.getWholeBookById(loan.getBookId());
+        bookById.setAvailableCopies(bookById.getAvailableCopies() + 1);
+
+        bookRepository.saveAndFlush(bookById);
+        Loan toReturn = loanRepository.saveAndFlush(loan);
+        return new LoanDTO(toReturn);
+
+    }
+
+    @Transactional
+    public void deleteLoan(Integer loanId) {
+
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan does not exist in our system"));
+
+        if (loan.getStatus() != LoanStatus.RETURNED) {
+            Book book = bookService.getWholeBookById(loan.getBookId());
+            book.setAvailableCopies(book.getAvailableCopies() + 1);
+            bookRepository.save(book);
+        }
+
+        loanRepository.delete(loan);
     }
 }
