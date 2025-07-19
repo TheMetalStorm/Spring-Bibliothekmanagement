@@ -290,6 +290,8 @@ Retrieves a specific genre by its ID.
 | POST   | `/admin/return/{loanId}`| Return a book (as admin)        | Admin   |
 | DELETE | `/admin/loans/{loanId}`| Delete a loan                   | Admin   |
 
+**Note:** LoanStatus can be `LOANED` or `RETURNED`
+
 ### GET /loans
 Returns a paginated and sorted list of all loans for the authenticated user.
 
@@ -340,10 +342,8 @@ Returns a loaned book.
 {
     "userId": 1,
     "bookId": 1,
-    "loanDate": "2025-01-01",
-    "dueDate": "2025-01-15",
-    "returnDate": null,
-    "loanStatus": "ACTIVE"
+    "returned": "YYYY-MM-DDTHH:MM:SS",
+    "loanStatus": "RETURNED"
 }
 ```
 
@@ -355,10 +355,8 @@ Returns a loaned book.
 {
     "userId": 1,
     "bookId": 1,
-    "loanDate": "2025-01-01",
-    "dueDate": "2025-01-15",
-    "returnDate": null,
-    "loanStatus": "ACTIVE"
+    "returned": null,
+    "loanStatus": "LOANED"
 }
 ```
 
