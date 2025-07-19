@@ -282,8 +282,13 @@ Retrieves a specific genre by its ID.
 | :--- | :--------------- | :------------------------------ | :------ |
 | GET    | `/loans`         | Get all loans for the user      | User    |
 | GET    | `/admin/loans`   | Get all loans                   | Admin   |
-| POST   | `/loan/{bookId}` | Loan a book                     | User    |
+| POST   | `/loans/{bookId}` | Loan a book                     | User    |
 | POST   | `/return/{loanId}`| Return a book                   | User    |
+| POST   | `/admin/loans`   | Add a new loan                  | Admin   |
+| POST   | `/admin/loans/raw`| Add a new loan (bypassing checks) | Admin   |
+| PUT    | `/admin/loans/{loanId}`| Update an existing loan         | Admin   |
+| POST   | `/admin/return/{loanId}`| Return a book (as admin)        | Admin   |
+| DELETE | `/admin/loans/{loanId}`| Delete a loan                   | Admin   |
 
 ### GET /loans
 Returns a paginated and sorted list of all loans for the authenticated user.
@@ -321,5 +326,48 @@ Returns a loaned book.
 
 **Path Parameters:**
 *   `loanId` (required, integer): The ID of the loan to return.
+
+
+### POST /admin/loans
+
+**Query Parameters:**
+*   `userId` (required, integer): The ID of the user.
+*   `bookId` (required, integer): The ID of the book to loan.
+
+### POST /admin/loans/raw
+**Body:**
+```json
+{
+    "userId": 1,
+    "bookId": 1,
+    "loanDate": "2025-01-01",
+    "dueDate": "2025-01-15",
+    "returnDate": null,
+    "loanStatus": "ACTIVE"
+}
+```
+
+### PUT /admin/loans/{loanId}
+**Path Parameters:**
+*   `loanId` (required, integer): The ID of the loan to update.
+**Body:**
+```json
+{
+    "userId": 1,
+    "bookId": 1,
+    "loanDate": "2025-01-01",
+    "dueDate": "2025-01-15",
+    "returnDate": null,
+    "loanStatus": "ACTIVE"
+}
+```
+
+### POST /admin/return/{loanId}
+**Path Parameters:**
+*   `loanId` (required, integer): The ID of the loan to return.
+
+### DELETE /admin/loans/{loanId}
+**Path Parameters:**
+*   `loanId` (required, integer): The ID of the loan to delete.
 
 
